@@ -1,0 +1,21 @@
+{
+    
+    "user_data": [
+        {
+            "include_tags": ["family-friendly", "adventure", "indoor"],
+            "budget": 15000,
+            "start_date": "2024-06-01",
+            "end_date": "2024-06-30",
+            "preferred_location": "Phuket",
+            "preferred_activities": ["sightseeing", "cultural experiences", "local cuisine", "shopping", "cafe hopping"] 
+        },
+        {
+            "include_tags": ["family-friendly", "adventure", "indoor"],
+            "budget": 12000,
+            "start_date": "2024-07-01",
+            "end_date": "2024-07-31",
+            "preferred_location": "Chiang Mai",
+            "preferred_activities": ["sightseeing", "cultural experiences", "local cuisine", "shopping", "cafe hopping"] 
+        }
+    ]
+}

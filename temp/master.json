@@ -1,0 +1,78 @@
+{
+    "locations": [
+        "Chiang Mai",
+        "Phuket"
+    ],
+    "zones": [
+        "Doi Suthep-Pui National Park",
+        "Doi Inthanon National Park",
+        "Nimmanhaemin Road (Sai Rang)",
+        "Across from Old City Gate (Pratu Mueang)",
+        "Nakkerd Hill",
+        "Patong Beach",
+        "Phuket Town"
+    ],
+    "attraction_tags": [
+        "family-friendly",
+        "adventure",
+        "indoor",
+        "sightseeing",
+        "cultural experiences",
+        "photo-worthy",
+        "hipster",
+        "shopping",
+        "dining",
+        "social",
+        "street-art",
+        "walking-street",
+        "local-crafts",
+        "lanna-art",
+        "cultural",
+        "water-park",
+        "thrill-seeking",
+        "outdoor",
+        "nature",
+        "hiking",
+        "beach",
+        "water-sports",
+        "nightlife"
+    ],
+    "transportation_types": {
+        "main_route": [
+            "train",
+            "bus",
+            "airplane"
+        ],
+        "local_transport": [
+            "bus",
+            "car",
+            "motorbike"
+        ]
+    },
+    "room_amenities": [
+        "Wi-Fi",
+        "TV",
+        "Air Conditioning",
+        "Swimming Pool",
+        "Mini Bar",
+        "Balcony",
+        "Mini Fridge",
+        "Jacuzzi",
+        "Room Service",
+        "Shared Kitchen",
+        "Lockers"
+    ],
+    "activities": [
+        "sightseeing",
+        "cultural experiences",
+        "local cuisine",
+        "shopping",
+        "cafe hopping",
+        "dining",
+        "hiking",
+        "water sports",
+        "beach activities",
+        "market exploration",
+        "street food touring"
+    ]
+}

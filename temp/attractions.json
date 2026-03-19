@@ -1,0 +1,212 @@
+{
+    "attractions": [
+        {
+            "id": 1,
+            "name": "Wat Phra That Doi Suthep",
+            "description": "A sacred temple located on Doi Suthep mountain, offering panoramic views of Chiang Mai.",
+            "province": "Chiang Mai",
+            "zone": "Doi Suthep-Pui National Park",
+            "tags": [
+                "family-friendly",
+                "adventure",
+                "indoor",
+                "sightseeing",
+                "cultural experiences"
+            ],
+            "entry_fee": {
+                "local_child": 20,
+                "local_adult": 20,
+                "foreigner": 20
+            },
+            "best_time": "19:00 - 21:00",
+            "operating_hours": {
+                "open": 8,
+                "close": 18
+            },
+            "metadata": [
+                "อัตราค่าเข้า 20 บาท/คน (ค่าบริการรถราง)",
+                "เวลาเปิด - ปิด : ทุกวัน 06.00 น. - 18.00 น.",
+                "ฤดูกาลแนะนำ : พฤศจิกายน - ธันวาคม",
+                "ช่วงเวลาที่ดีที่สุด : 09.00 - 11.00 น."
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Doi Inthanon National Park",
+            "description": "The highest mountain in Thailand, featuring waterfalls, hiking trails, and diverse flora and fauna.",
+            "province": "Chiang Mai",
+            "zone": "Doi Inthanon National Park",
+            "tags": [
+                "family-friendly",
+                "adventure",
+                "outdoor",
+                "nature",
+                "hiking"
+            ],
+            "recommended_time": "4-6 hours",
+            "operating_hours": {
+                "open": 6,
+                "close": 18
+            },
+            "metadata": [
+                "อัตราค่าเข้า 20 บาท/คน (ค่าบริการรถราง)",
+                "เวลาเปิด - ปิด : ทุกวัน 06.00 น. - 18.00 น.",
+                "ฤดูกาลแนะนำ : พฤศจิกายน - ธันวาคม",
+                "ช่วงเวลาที่ดีที่สุด : 09.00 - 11.00 น."
+            ]
+        },
+        {
+            "id": 3,
+            "name": "One Nimman",
+            "description": "A chic hipster social hub and street art destination located on Nimmanhaemin Road. Features trendy restaurants, boutique shops, fashion stores, and beautiful photo spots. An eclectic area with a cosmopolitan vibe.",
+            "province": "Chiang Mai",
+            "zone": "Nimmanhaemin Road (Sai Rang)",
+            "tags": [
+                "hipster",
+                "shopping",
+                "dining",
+                "photo-worthy",
+                "social",
+                "street-art"
+            ],
+            "recommended_time": "2-3 hours",
+            "operating_hours": {
+                "open": 11,
+                "close": 23
+            },
+            "best_time": "19:00 - 21:00",
+            "metadata": [
+                "การเดินทาง : นิมมานเหมินทร์ เชียงใหม่ (แยกรินคำ)",
+                "เวลาเปิด - ปิด : ทุกวัน 11.00 น. - 23.00 น.",
+                "ฤดูกาลแนะนำ : พฤศจิกายน - ธันวาคม",
+                "ช่วงเวลาที่ดีที่สุด : 19.00 - 21.00 น.",
+                "อัตราค่าเข้า ฟรี"
+            ]
+        },
+        {
+            "id": 4,
+            "name": "ถนนคนเดินวัวลาย (Walking Street Wua Lai)",
+            "description": "A charming walking street featuring traditional Lanna art products, silver items, local crafts, and excellent restaurants. Located near the Old City Gate, accessible by RTC Smart Bus from One Nimman. Famous for restaurants like Mae Jan, bakeries, and authentic local products showcasing northern Thai culture.",
+            "province": "Chiang Mai",
+            "zone": "Across from Old City Gate (Pratu Mueang)",
+            "tags": [
+                "walking-street",
+                "shopping",
+                "dining",
+                "local-crafts",
+                "lanna-art",
+                "cultural"
+            ],
+            "recommended_time": "2-3 hours",
+            "operating_hours": {
+                "open": 17,
+                "close": 23
+            },
+            "best_time": "19:00 - 21:00",
+            "operating_days": "Saturday",
+            "metadata": [
+                "การเดินทาง : ตรงข้ามประตูเมืองเชียงใหม่ เดินไปทางขวานิดนึงจะเจอกับถนนวัวลาย",
+                "เวลาเปิด - ปิด : วันเสาร์ 17.00 น. - 23.00 น.",
+                "ฤดูกาลแนะนำ : พฤศจิกายน - ธันวาคม",
+                "ช่วงเวลาที่ดีที่สุด : 19.00 - 21.00 น.",
+                "อัตราค่าเข้า ฟรี"
+            ]
+        },
+        {
+            "id": 16,
+            "name": "พระใหญ่เมืองภูเก็ต (Big Buddha Phuket)",
+            "description": "A large Buddha statue located on Nakkerd Hill, offering panoramic views of Phuket. A popular tourist attraction and a symbol of peace and tranquility.",
+            "province": "Phuket",
+            "zone": "Nakkerd Hill",
+            "tags": [
+                "family-friendly",
+                "sightseeing",
+                "cultural experiences",
+                "photo-worthy"
+            ],                                                                                                                                                                                               
+            "recommended_time": "1-2 hours",
+            "operating_hours": {
+                "open": 6,
+                "close": 19
+            },
+            "metadata": [
+                "เวลาเปิดบริการ: เปิดวันพุธ–ศุกร์ เวลา 16:00-22:30 น.",
+                "ค่าเข้าชม อัตราค่าบริการ: ไม่เสียค่าใช้จ่าย",
+                "โทรศัพท์: 089-474-5253"
+            ]
+        },
+        {
+            "id": 17,
+            "name": "หาดป่าตอง (Patong Beach)",
+            "description": "A popular beach destination in Phuket known for its vibrant nightlife, water sports, and bustling atmosphere. The beach offers a wide range of activities, including jet skiing, parasailing, and beach volleyball.",
+            "province": "Phuket",
+            "zone": "Patong Beach",
+            "tags": [
+                "family-friendly",
+                "adventure",
+                "outdoor",
+                "beach",
+                "water-sports",
+                "nightlife"
+            ],
+            "recommended_time": "3-4 hours",
+            "operating_hours": {
+                "open": 6,
+                "close": 18
+            },
+            "metadata": [
+                "เวลาเปิดบริการ: เปิดให้เข้าชมตลอด 24 ชั่วโมง",
+                "ค่าเข้าชม อัตราค่าบริการ: ไม่เสียค่าใช้จ่าย",
+                "โทรศัพท์: 076-211036 (การท่องเที่ยวแห่งประเทศไทย สำนักงานภูเก็ต)"
+            ]
+        },
+        {
+            "id": 18,
+            "name": "หลาดปล่อยของ (Lard Ploy Kong Market)",
+            "description": "A vibrant market in Phuket that offers a wide variety of local products, including handicrafts, souvenirs, and delicious street food. The market is a great place to experience the local culture and find unique items to take home.",
+            "province": "Phuket",
+            "zone": "Phuket Town",
+            "tags": [
+                "shopping",
+                "dining",
+                "local-crafts",
+                "cultural",
+                "street-food"
+            ],
+            "recommended_time": "2-3 hours",
+            "operating_hours": {
+                "open": 16,
+                "close": 22
+            },
+            "metadata": [
+                "เวลาเปิดบริการ: เปิดวันพุธ–ศุกร์ เวลา 16:00-22:30 น.",
+                "ค่าเข้าชม อัตราค่าบริการ: ไม่เสียค่าใช้จ่าย"
+            ]
+        },
+        {
+            "id": 19,
+            "name": "Andamanda Phuket",
+            "description": "A water park in Phuket that offers a variety of water attractions, including slides, wave pools, and lazy rivers. The park is a great place for families and thrill-seekers to cool off and have fun.",
+            "province": "Phuket",
+            "zone": "Phuket Town",
+            "tags": [
+                "family-friendly",
+                "adventure",
+                "outdoor",
+                "water-park",
+                "thrill-seeking"
+            ],
+            "recommended_time": "4-6 hours",
+            "operating_hours": {
+                "open": 10,
+                "close": 18
+            },
+            "metadata": [
+                "เวลาเปิดบริการ: 10:00-19:00 น.",
+                "ผู้ใหญ่ (ส่วนสูง 122 ซม.ขึ้นไป): 1,800 บาท",
+                "เด็ก (ส่วนสูง 90-121 ซม.): 1,200 บาท",
+                "โทรศัพท์: 076-646-777"
+            ]
+        }
+    ]
+}

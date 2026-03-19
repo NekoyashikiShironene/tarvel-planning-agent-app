@@ -1,0 +1,210 @@
+{
+    "main_route": [
+        {
+            "id": 1,
+            "name": "Bangkok to Chiang Mai",
+            "type": "train",
+            "description": "Travel from Bangkok to Chiang Mai by train",
+            "metadata": [
+                "Duration: 10-12 hours",
+                "Price range: 500-1500 THB",
+                "Departures: 07:00, 13:00, 19:00 daily",
+                "Arrives at: Chiang Mai Railway Station"
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Bangkok to Chiang Mai",
+            "type": "bus",
+            "description": "Travel from Bangkok to Chiang Mai by bus",
+            "metadata": [
+                "Duration: 8-10 hours",
+                "Price range: 300-800 THB",
+                "Departures: 08:00, 14:00, 20:00 daily (multiple operators)",
+                "Departs from: Northern Bus Terminal (Mo Chit)"
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Bangkok to Chiang Mai",
+            "type": "airplane",
+            "description": "Travel from Bangkok to Chiang Mai by airplane",
+            "metadata": [
+                "Duration: 1.5 hours flight + 1 hour transfer",
+                "Price range: 1500-4000 THB",
+                "Departures: 06:00, 09:00, 12:00, 15:00, 18:00 daily",
+                "Airport: Bangkok Airways, Thai Airways International"
+            ]
+        },
+        {
+            "id": 4,
+            "name": "Bangkok to Phuket",
+            "type": "train",
+            "description": "Travel from Bangkok to Phuket by train",
+            "metadata": [
+                "Duration: 12-14 hours",
+                "Price range: 600-2000 THB",
+                "Departures: 07:00, 14:00, 19:00 daily",
+                "Arrives at: Phuket Railway Station"
+            ]
+        },
+        {
+            "id": 5,
+            "name": "Bangkok to Phuket",
+            "type": "bus",
+            "description": "Travel from Bangkok to Phuket by bus",
+            "metadata": [
+                "Duration: 11-13 hours",
+                "Price range: 400-1200 THB",
+                "Departures: 08:00, 15:00, 20:00 daily (multiple operators)",
+                "Departs from: Southern Bus Terminal (Sai Tai Mai)"
+            ]
+        },
+        {
+            "id": 6,
+            "name": "Bangkok to Phuket",
+            "type": "airplane",
+            "description": "Travel from Bangkok to Phuket by airplane",
+            "metadata": [
+                "Duration: 1.5 hours flight + 1 hour transfer",
+                "Price range: 1800-5000 THB",
+                "Departures: 07:00, 10:00, 13:00, 16:00, 19:00 daily",
+                "Airlines: Thai Airways, Bangkok Airways, AirAsia, Nok Air"
+            ]
+        },
+        {
+            "id": 7,
+            "name": "Chiang Mai to Bangkok",
+            "type": "train",
+            "description": "Travel from Chiang Mai to Bangkok by train",
+            "metadata": [
+                "Duration: 10-12 hours",
+                "Price range: 500-1500 THB",
+                "Departures: 08:00, 14:00, 20:00 daily",
+                "Departs from: Chiang Mai Railway Station"
+            ]
+        },
+        {
+            "id": 8,
+            "name": "Chiang Mai to Bangkok",
+            "type": "bus",
+            "description": "Travel from Chiang Mai to Bangkok by bus",
+            "metadata": [
+                "Duration: 8-10 hours",
+                "Price range: 300-800 THB",
+                "Departures: 07:00, 13:00, 19:00 daily (multiple operators)",
+                "Departs from: Chiang Mai Arcade Bus Station"
+            ]
+        },
+        {
+            "id": 9,
+            "name": "Chiang Mai to Bangkok",
+            "type": "airplane",
+            "description": "Travel from Chiang Mai to Bangkok by airplane",
+            "metadata": [
+                "Duration: 1.5 hours flight + 1 hour transfer",
+                "Price range: 1500-4000 THB",
+                "Departures: 07:00, 10:00, 13:00, 16:00, 19:00 daily",
+                "Airlines: Thai Airways International, Bangkok Airways"
+            ]
+        },
+        {
+            "id": 10,
+            "name": "Phuket to Bangkok",
+            "type": "train",
+            "description": "Travel from Phuket to Bangkok by train",
+            "metadata": [
+                "Duration: 12-14 hours",
+                "Price range: 600-2000 THB",
+                "Departures: 08:00, 15:00, 20:00 daily",
+                "Departs from: Phuket Railway Station"
+            ]
+        },
+        {
+            "id": 11,
+            "name": "Phuket to Bangkok",
+            "type": "bus",
+            "description": "Travel from Phuket to Bangkok by bus",
+            "metadata": [
+                "Duration: 11-13 hours",
+                "Price range: 400-1200 THB",
+                "Departures: 09:00, 16:00, 21:00 daily (multiple operators)",
+                "Departs from: Phuket Bus Terminal (Phuket Town)"
+            ]
+        },
+        {
+            "id": 12,
+            "name": "Phuket to Bangkok",
+            "type": "airplane",
+            "description": "Travel from Phuket to Bangkok by airplane",
+            "metadata": [
+                "Duration: 1.5 hours flight + 1 hour transfer",
+                "Price range: 1800-5000 THB",
+                "Departures: 08:00, 11:00, 14:00, 17:00, 20:00 daily",
+                "Airlines: Thai Airways, Bangkok Airways, AirAsia, Nok Air, Lion Air"
+            ]
+        }
+    ],
+    "local_transport": [
+        {
+            "id": 1,
+            "name": "Airport Shuttle",
+            "type": "bus",
+            "description": "Comfortable shuttle service from the airport to the hotel",
+            "metadata": [
+                "เวลาให้บริการ: 06:00-22:00 น.",
+                "อัตราค่าบริการ: 50 THB ต่อเที่ยว"
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Public Taxi",
+            "type": "car",
+            "description": "Affordable taxi service for local transportation",
+            "metadata": [
+                "เวลาให้บริการ: 24 ชั่วโมง",
+                "อัตราค่าบริการ: 20 THB ต่อกิโลเมตร"
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Motorbike Rental",
+            "type": "motorbike",
+            "description": "Rent a motorbike for quick and easy transportation",
+            "metadata": [
+                "เวลาให้บริการ: 08:00-20:00 น.",
+                "อัตราค่าบริการ: 300 THB ต่อวัน"
+            ]
+        },
+        {
+            "id": 4,
+            "name": "Car Rental",
+            "type": "car",
+            "description": "Car rental for exploring the city",
+            "metadata": [
+                "เวลาให้บริการ: 08:00-20:00 น.",
+                "อัตราค่าบริการ: 1500 THB ต่อวัน"
+            ]
+        },
+        {
+            "id": 6,
+            "name": "Public Bus",
+            "type": "bus",
+            "description": "Affordable public bus service for local transportation",
+            "metadata": [
+                "เวลาให้บริการ: 06:00-22:00 น.",
+                "อัตราค่าบริการ: 10 THB ต่อเที่ยว"
+            ]
+        },
+        {
+            "id": 7,
+            "name": "Private Taxi",
+            "type": "car",
+            "description": "Private taxi service for convenient travel",
+            "metadata": [
+                "เวลาให้บริการ: 24 ชั่วโมง",
+                "อัตราค่าบริการ: 30 THB ต่อกิโลเมตร"
+            ]
+        }
+    ]
+}
