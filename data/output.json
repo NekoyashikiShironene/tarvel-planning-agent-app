@@ -1,0 +1,254 @@
+{
+    "validator_output": {
+        "intent": {
+            "destination": "Chiang Mai",
+            "budget": 15000,
+            "days": 3,
+            "pax_adult": 2,
+            "pax_child": 0,
+            "main_transport_preference": "bus",
+            "local_transport_preference": "mixed_public_and_car",
+            "attraction_tags": [
+                "temple",
+                "nature",
+                "walking_street"
+            ],
+            "room_tags": [
+                "family_suite",
+                "mountain_view",
+                "value_for_money"
+            ],
+            "restaurant_tags": [
+                "local_food",
+                "street_food",
+                "budget_friendly"
+            ]
+        },
+        "special_instructions": "เน้นเที่ยววัด ธรรมชาติ คาเฟ่ และสตรีทฟู้ด ตารางไม่แน่นเกินไป และต้องคุมงบให้อยู่ใน 15,000 บาท",
+        "is_feasible": true,
+        "reject_message": ""
+    },
+    "scheduler_output": {
+        "financial_summary": {
+            "requested_budget": 15000,
+            "accommodation_cost": 2400,
+            "main_transport_cost": 1600,
+            "local_transport_cost": 600,
+            "food_cost": 1800,
+            "activity_cost": 840,
+            "total_actual_cost": 7240,
+            "remaining_budget": 7760
+        },
+        "accommodation": [
+            {
+                "room_id": 2,
+                "hotel_name": "Mountain View Resort",
+                "room_name": "Family Suite",
+                "price_per_night": 1200,
+                "check_in_day": 1,
+                "check_out_day": 3,
+                "total_nights": 2,
+                "total_cost": 2400
+            }
+        ],
+        "main_transportation": {
+            "outbound": {
+                "transport_id": 2,
+                "type": "bus",
+                "name": "Bangkok to Chiang Mai",
+                "cost": 800,
+                "schedule": "Depart 08:00 from Mo Chit"
+            },
+            "inbound": {
+                "transport_id": 8,
+                "type": "bus",
+                "name": "Chiang Mai to Bangkok",
+                "cost": 800,
+                "schedule": "Depart 19:00 from Arcade Bus Station"
+            }
+        },
+        "daily_plans": [
+            {
+                "day": 1,
+                "zone": "Doi Suthep-Pui National Park",
+                "activities": [
+                    {
+                        "time_slot": "08:00 - 09:00",
+                        "activity_type": "restaurant",
+                        "meal_time": "breakfast",
+                        "place_id": 21,
+                        "name_th": "โจ๊กยามเช้า ดอยสุเทพ",
+                        "name_eng": "Doi Suthep Morning Congee",
+                        "cost": 65,
+                        "remark": "Quick breakfast before temple visit"
+                    },
+                    {
+                        "time_slot": "09:30 - 11:30",
+                        "activity_type": "attraction",
+                        "place_id": 1,
+                        "name": "Wat Phra That Doi Suthep",
+                        "cost": 20,
+                        "remark": "Morning light and cooler weather"
+                    },
+                    {
+                        "time_slot": "12:00 - 12:40",
+                        "activity_type": "local_transport",
+                        "place_id": 2,
+                        "name": "Public Taxi",
+                        "cost": 120,
+                        "remark": "Downhill transfer to Nimman"
+                    },
+                    {
+                        "time_slot": "13:00 - 14:00",
+                        "activity_type": "restaurant",
+                        "meal_time": "lunch",
+                        "place_id": 22,
+                        "name_th": "ข้าวกล่องด่วน นิมมาน",
+                        "name_eng": "Nimman Express Lunch Box",
+                        "cost": 90,
+                        "remark": "Budget lunch in Nimman"
+                    },
+                    {
+                        "time_slot": "18:00 - 19:30",
+                        "activity_type": "restaurant",
+                        "meal_time": "dinner",
+                        "place_id": 5,
+                        "name_th": "นิมมาน โซเชียล บิสโทร",
+                        "name_eng": "Nimman Social Bistro",
+                        "cost": 350,
+                        "remark": "Dinner and relaxed social vibe"
+                    }
+                ],
+                "daily_estimated_cost": 645
+            },
+            {
+                "day": 2,
+                "zone": "Doi Inthanon National Park",
+                "activities": [
+                    {
+                        "time_slot": "07:00 - 08:00",
+                        "activity_type": "local_transport",
+                        "place_id": 4,
+                        "name": "Car Rental",
+                        "cost": 300,
+                        "remark": "Transfer to Doi Inthanon area"
+                    },
+                    {
+                        "time_slot": "08:30 - 10:00",
+                        "activity_type": "restaurant",
+                        "meal_time": "breakfast",
+                        "place_id": 3,
+                        "name_th": "อินทนนท์ เทรล คาเฟ่",
+                        "name_eng": "Inthanon Trail Cafe",
+                        "cost": 180,
+                        "remark": "Coffee and morning snack"
+                    },
+                    {
+                        "time_slot": "10:15 - 14:30",
+                        "activity_type": "attraction",
+                        "place_id": 2,
+                        "name": "Doi Inthanon National Park",
+                        "cost": 20,
+                        "remark": "Nature trails and viewpoints"
+                    },
+                    {
+                        "time_slot": "14:45 - 15:45",
+                        "activity_type": "restaurant",
+                        "meal_time": "lunch",
+                        "place_id": 16,
+                        "name_th": "ร้านข้าวแกง อินทนนท์เทรล",
+                        "name_eng": "Inthanon Trail Rice Bowl",
+                        "cost": 95,
+                        "remark": "Affordable late lunch"
+                    },
+                    {
+                        "time_slot": "18:00 - 19:30",
+                        "activity_type": "restaurant",
+                        "meal_time": "dinner",
+                        "place_id": 8,
+                        "name_th": "ขันโตกประตูเงิน",
+                        "name_eng": "Silver Gate Northern Table",
+                        "cost": 300,
+                        "remark": "Traditional northern dinner"
+                    }
+                ],
+                "daily_estimated_cost": 895
+            },
+            {
+                "day": 3,
+                "zone": "Across from Old City Gate (Pratu Mueang)",
+                "activities": [
+                    {
+                        "time_slot": "08:30 - 09:30",
+                        "activity_type": "restaurant",
+                        "meal_time": "breakfast",
+                        "place_id": 15,
+                        "name_th": "ก๋วยเตี๋ยวราคาประหยัด ดอยสุเทพ",
+                        "name_eng": "Suthep Budget Noodle Bar",
+                        "cost": 80,
+                        "remark": "Simple breakfast"
+                    },
+                    {
+                        "time_slot": "10:00 - 12:00",
+                        "activity_type": "attraction",
+                        "place_id": 4,
+                        "name": "ถนนคนเดินวัวลาย (Walking Street Wua Lai)",
+                        "cost": 0,
+                        "remark": "Crafts and local culture walk"
+                    },
+                    {
+                        "time_slot": "12:15 - 13:00",
+                        "activity_type": "restaurant",
+                        "meal_time": "lunch",
+                        "place_id": 17,
+                        "name_th": "ร้านข้าวแกงนักศึกษา นิมมาน",
+                        "name_eng": "Nimman Student Eats",
+                        "cost": 90,
+                        "remark": "Affordable lunch"
+                    },
+                    {
+                        "time_slot": "16:30 - 17:30",
+                        "activity_type": "local_transport",
+                        "place_id": 6,
+                        "name": "Public Bus",
+                        "cost": 20,
+                        "remark": "City transfer to evening zone"
+                    },
+                    {
+                        "time_slot": "18:00 - 19:30",
+                        "activity_type": "restaurant",
+                        "meal_time": "dinner",
+                        "place_id": 23,
+                        "name_th": "ปิ้งย่างเสียบไม้ ถนนวัวลาย",
+                        "name_eng": "Wua Lai Evening Grill",
+                        "cost": 95,
+                        "remark": "Final dinner before departure"
+                    }
+                ],
+                "daily_estimated_cost": 285
+            }
+        ]
+    },
+    "presenter_output": {
+        "daily_plan_summaries": [
+            {
+                "day": 1,
+                "message": "### วันที่ 1: Temple + Nimman Vibes\n- เริ่มเช้าด้วย **โจ๊กยามเช้า ดอยสุเทพ** แล้วขึ้นไปไหว้พระที่ **Wat Phra That Doi Suthep** ช่วงอากาศกำลังดี\n- เที่ยงนั่ง **Public Taxi** ลงมาโซนนิมมาน และทานมื้อกลางวันที่ **Nimman Express Lunch Box**\n- ช่วงเย็นปิดท้ายที่ **Nimman Social Bistro** บรรยากาศสบายๆ เหมาะกับการพักผ่อนหลังเที่ยวทั้งวัน\n- ค่าใช้จ่ายโดยประมาณทั้งวัน: **645 บาท**"
+            },
+            {
+                "day": 2,
+                "message": "### วันที่ 2: Inthanon Nature Day\n- ออกเดินทางแต่เช้าด้วย **Car Rental** ไปโซนดอยอินทนนท์\n- แวะกาแฟและมื้อเช้าที่ **Inthanon Trail Cafe** ก่อนเข้าชม **Doi Inthanon National Park**\n- บ่ายทานข้าวที่ **Inthanon Trail Rice Bowl** และช่วงเย็นทานอาหารเหนือที่ **Silver Gate Northern Table**\n- ค่าใช้จ่ายโดยประมาณทั้งวัน: **895 บาท**"
+            },
+            {
+                "day": 3,
+                "message": "### วันที่ 3: Old City + Street Food\n- เริ่มวันแบบสบายๆ ที่ **Suthep Budget Noodle Bar**\n- ช่วงสายเดินเล่น **Walking Street Wua Lai** ดูงานคราฟต์และบรรยากาศเมืองเก่า\n- กลางวันแวะ **Nimman Student Eats** จากนั้นใช้ **Public Bus** ย้ายโซนช่วงเย็น\n- มื้อสุดท้ายปิดทริปที่ **Wua Lai Evening Grill** สไตล์สตรีทฟู้ด\n- ค่าใช้จ่ายโดยประมาณทั้งวัน: **285 บาท**"
+            }
+        ],
+        "transportation_summary": "ทริปนี้เดินทางหลักด้วยรถบัสทั้งไปและกลับ (Bangkok to Chiang Mai / Chiang Mai to Bangkok) รวม 1,600 บาท โดยระหว่างเที่ยวในเมืองใช้ Public Taxi, Car Rental และ Public Bus ตามช่วงเวลา รวมค่าเดินทางในพื้นที่ 600 บาท ทำให้ค่าเดินทางรวมทั้งหมดอยู่ที่ 2,200 บาท",
+        "budget_summary": "งบที่ตั้งไว้ 15,000 บาท ใช้จริงประมาณ 7,240 บาท (ที่พัก 2,400 + เดินทาง 2,200 + อาหาร 1,800 + กิจกรรม 840) ยังเหลืองบ 7,760 บาท ถือว่าอยู่ในงบแบบสบายๆ",
+        "adjustment_suggestions": [
+            "ถ้าอยากประหยัดเพิ่ม แนะนำลดมื้อดินเนอร์ระดับพรีเมียมลง 1 มื้อ จะช่วยลดงบได้ประมาณ 200-300 บาท",
+            "หากอยากเที่ยวชิลขึ้น สามารถขยับเวลาออกเดินทางวันที่ 2 ช้าลงเล็กน้อย แล้วเพิ่มจุดคาเฟ่ในเมืองช่วงเย็นได้"
+        ]
+    }
+}

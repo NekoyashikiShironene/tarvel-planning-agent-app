@@ -1,0 +1,88 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "hotel_name": "Grand Palace Hotel",
+            "room_name": "Deluxe Room",
+            "capacity": 2,
+            "amenities": ["Wi-Fi", "TV", "Air Conditioning", "Swimming Pool"],
+            "price_per_night": 800,
+            "metadata": [
+                "Check-in time: 2:00 PM",
+                "Check-out time: 12:00 PM",
+                "Cancellation policy: Free cancellation up to 24 hours before check-in",
+                "Breakfast included"
+            ]
+        },
+        {
+            "id": 2,
+            "hotel_name": "Mountain View Resort",
+            "room_name": "Family Suite",
+            "capacity": 4,
+            "amenities": ["Wi-Fi", "TV", "Air Conditioning", "Mini Bar"],
+            "price_per_night": 1200,
+            "metadata": [
+                "Check-in time: 3:00 PM",
+                "Check-out time: 11:00 AM",
+                "Cancellation policy: Free cancellation up to 48 hours before check-in",
+                "Late check-out available for additional fee"
+            ]
+        },
+        {
+            "id": 3,
+            "hotel_name": "City Center Inn",
+            "room_name": "Standard Room",
+            "capacity": 1,
+            "amenities": ["Wi-Fi", "TV"],
+            "price_per_night": 500,
+            "metadata": [
+                "Check-in time: 1:00 PM",
+                "Check-out time: 10:00 AM",
+                "Cancellation policy: Non-refundable",
+                "Pet-friendly room"
+            ]
+        },
+        {
+            "id": 4,
+            "hotel_name": "Beachfront Paradise",
+            "room_name": "Ocean View Room",
+            "capacity": 2,
+            "amenities": ["Wi-Fi", "TV", "Air Conditioning", "Balcony", "Mini Fridge"],
+            "price_per_night": 1500,
+            "metadata": [
+                "Check-in time: 4:00 PM",
+                "Check-out time: 12:00 PM",
+                "Cancellation policy: Free cancellation up to 72 hours before check-in",
+                "Sea view included"
+            ]
+        },
+        {
+            "id": 5,
+            "hotel_name": "Historic Downtown Hotel",
+            "room_name": "Heritage Suite",
+            "capacity": 3,
+            "amenities": ["Wi-Fi", "TV", "Air Conditioning", "Jacuzzi", "Room Service"],
+            "price_per_night": 2000,
+            "metadata": [
+                "Check-in time: 2:00 PM",
+                "Check-out time: 11:00 AM",
+                "Cancellation policy: 50% refund up to 24 hours before check-in",
+                "Historic building with modern amenities"
+            ]
+        },
+        {
+            "id": 6,
+            "hotel_name": "Budget Stay Hostel",
+            "room_name": "Shared Dorm",
+            "capacity": 6,
+            "amenities": ["Wi-Fi", "Shared Kitchen", "Lockers"],
+            "price_per_night": 300,
+            "metadata": [
+                "Check-in time: 12:00 PM",
+                "Check-out time: 10:00 AM",
+                "Cancellation policy: Free cancellation up to 12 hours before check-in",
+                "Backpacker friendly"
+            ]
+        }
+    ]
+}

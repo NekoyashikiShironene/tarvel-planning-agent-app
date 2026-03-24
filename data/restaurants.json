@@ -1,0 +1,394 @@
+{
+    "restaurants": [
+        {
+            "id": 1,
+            "name_th": "ครัวล้านนา วิวสุเทพ",
+            "name_eng": "Suthep View Lanna Kitchen",
+            "description": "Cozy northern Thai restaurant near the mountain route, known for classic Lanna dishes and relaxed family seating.",
+            "province": "Chiang Mai",
+            "zone": "Doi Suthep-Pui National Park",
+            "tags": ["local-food", "cultural", "family-friendly", "dining"],
+            "average_price_per_pax": 220,
+            "metadata": [
+                "Opening hours: 09:00-20:00",
+                "Recommended time: Lunch and early dinner",
+                "Notes: Signature northern set menu and mountain-view seating"
+            ]
+        },
+        {
+            "id": 2,
+            "name_th": "ม่อนแจ่ม ปิ้งย่างกลางป่า",
+            "name_eng": "Mon Cham Forest Grill",
+            "description": "Open-air grill spot with forest views, serving smoky grilled meats and simple sharing platters.",
+            "province": "Chiang Mai",
+            "zone": "Doi Suthep-Pui National Park",
+            "tags": ["outdoor", "nature", "grill", "photo-worthy"],
+            "average_price_per_pax": 280,
+            "metadata": [
+                "Opening hours: 10:00-21:00",
+                "Recommended time: Sunset dinner",
+                "Notes: Best for group grilling and scenic photos"
+            ]
+        },
+        {
+            "id": 3,
+            "name_th": "อินทนนท์ เทรล คาเฟ่",
+            "name_eng": "Inthanon Trail Cafe",
+            "description": "Small cafe for hikers offering coffee, light breakfast, and quick bites before or after trail walks.",
+            "province": "Chiang Mai",
+            "zone": "Doi Inthanon National Park",
+            "tags": ["cafe", "hiking", "nature", "breakfast"],
+            "average_price_per_pax": 180,
+            "metadata": [
+                "Opening hours: 06:30-17:00",
+                "Recommended time: Breakfast",
+                "Notes: Popular stop before hiking routes"
+            ]
+        },
+        {
+            "id": 4,
+            "name_th": "ร้านอาหารริมน้ำตกแม่กลาง",
+            "name_eng": "Mae Klang Waterfall Eatery",
+            "description": "Casual local eatery near waterfall routes with rice dishes, soups, and easy lunch menus for groups.",
+            "province": "Chiang Mai",
+            "zone": "Doi Inthanon National Park",
+            "tags": ["local-food", "family-friendly", "outdoor", "lunch"],
+            "average_price_per_pax": 240,
+            "metadata": [
+                "Opening hours: 08:00-18:00",
+                "Recommended time: Lunch",
+                "Notes: Family-friendly tables near nature trails"
+            ]
+        },
+        {
+            "id": 5,
+            "name_th": "นิมมาน โซเชียล บิสโทร",
+            "name_eng": "Nimman Social Bistro",
+            "description": "Modern bistro in the Nimman area with trendy plates, creative drinks, and a social evening vibe.",
+            "province": "Chiang Mai",
+            "zone": "Nimmanhaemin Road (Sai Rang)",
+            "tags": ["hipster", "dining", "social", "photo-worthy"],
+            "average_price_per_pax": 350,
+            "metadata": [
+                "Opening hours: 11:00-23:00",
+                "Recommended time: Dinner",
+                "Notes: Stylish spot for social dining and photos"
+            ]
+        },
+        {
+            "id": 6,
+            "name_th": "โรสต์ แอนด์ บลูม นิมมาน",
+            "name_eng": "Roast & Bloom Nimman",
+            "description": "Brunch-focused cafe with specialty coffee, toast sets, and desserts popular with shoppers and students.",
+            "province": "Chiang Mai",
+            "zone": "Nimmanhaemin Road (Sai Rang)",
+            "tags": ["cafe", "brunch", "shopping", "dessert"],
+            "average_price_per_pax": 260,
+            "metadata": [
+                "Opening hours: 08:00-19:00",
+                "Recommended time: Brunch",
+                "Notes: Coffee and dessert pairings are the highlights"
+            ]
+        },
+        {
+            "id": 7,
+            "name_th": "สตรีทฟู้ดวัวลาย",
+            "name_eng": "Wua Lai Night Bites",
+            "description": "Night market style stall cluster serving affordable grilled snacks and classic Chiang Mai street dishes.",
+            "province": "Chiang Mai",
+            "zone": "Across from Old City Gate (Pratu Mueang)",
+            "tags": ["street-food", "walking-street", "dining", "budget"],
+            "average_price_per_pax": 120,
+            "metadata": [
+                "Opening hours: 17:00-23:00",
+                "Recommended time: Evening",
+                "Notes: Great for low-cost street food hopping"
+            ]
+        },
+        {
+            "id": 8,
+            "name_th": "ขันโตกประตูเงิน",
+            "name_eng": "Silver Gate Northern Table",
+            "description": "Traditional northern Thai dinner house with local set menus and warm old-city atmosphere.",
+            "province": "Chiang Mai",
+            "zone": "Across from Old City Gate (Pratu Mueang)",
+            "tags": ["local-food", "lanna-art", "cultural", "dinner"],
+            "average_price_per_pax": 300,
+            "metadata": [
+                "Opening hours: 16:30-22:00",
+                "Recommended time: Dinner",
+                "Notes: Traditional Lanna-style menu and decor"
+            ]
+        },
+        {
+            "id": 9,
+            "name_th": "เขานาคเกิด พาโนรามา คาเฟ่",
+            "name_eng": "Nakkerd Hill Panorama Cafe",
+            "description": "Hilltop cafe with wide scenic views, offering coffee, cakes, and light meals for sightseeing breaks.",
+            "province": "Phuket",
+            "zone": "Nakkerd Hill",
+            "tags": ["cafe", "sightseeing", "photo-worthy", "family-friendly"],
+            "average_price_per_pax": 260,
+            "metadata": [
+                "Opening hours: 08:00-18:30",
+                "Recommended time: Afternoon",
+                "Notes: Panoramic viewpoints available at terrace seats"
+            ]
+        },
+        {
+            "id": 10,
+            "name_th": "ระเบียงสายสุขภาพ พระใหญ่ภูเก็ต",
+            "name_eng": "Big Buddha Green Terrace",
+            "description": "Vegetarian-friendly terrace restaurant serving healthy bowls and Thai favorites in a peaceful setting.",
+            "province": "Phuket",
+            "zone": "Nakkerd Hill",
+            "tags": ["vegetarian", "healthy", "cultural", "lunch"],
+            "average_price_per_pax": 240,
+            "metadata": [
+                "Opening hours: 09:00-19:00",
+                "Recommended time: Lunch",
+                "Notes: Healthy menu with vegetarian-friendly options"
+            ]
+        },
+        {
+            "id": 11,
+            "name_th": "ระเบียงซีฟู้ด หาดป่าตอง",
+            "name_eng": "Patong Beach Seafood Deck",
+            "description": "Busy beachfront seafood spot with fresh catches, grilled platters, and lively evening crowds.",
+            "province": "Phuket",
+            "zone": "Patong Beach",
+            "tags": ["seafood", "beach", "nightlife", "dinner"],
+            "average_price_per_pax": 420,
+            "metadata": [
+                "Opening hours: 11:00-23:30",
+                "Recommended time: Dinner",
+                "Notes: Fresh seafood and lively beachfront atmosphere"
+            ]
+        },
+        {
+            "id": 12,
+            "name_th": "ซันเซ็ต ป่าตอง กริลล์",
+            "name_eng": "Sunset Patong Grill",
+            "description": "Family-friendly grill restaurant near the beach, popular for sunset meals and sharing menus.",
+            "province": "Phuket",
+            "zone": "Patong Beach",
+            "tags": ["grill", "beach", "family-friendly", "sunset"],
+            "average_price_per_pax": 340,
+            "metadata": [
+                "Opening hours: 12:00-22:30",
+                "Recommended time: Sunset",
+                "Notes: Good for family sharing platters"
+            ]
+        },
+        {
+            "id": 13,
+            "name_th": "ครัวเมืองเก่าภูเก็ต",
+            "name_eng": "Phuket Town Old Street Kitchen",
+            "description": "Local old-town kitchen known for affordable noodle and rice dishes with authentic Phuket flavor.",
+            "province": "Phuket",
+            "zone": "Phuket Town",
+            "tags": ["local-food", "street-food", "cultural", "budget"],
+            "average_price_per_pax": 160,
+            "metadata": [
+                "Opening hours: 10:00-20:00",
+                "Recommended time: Lunch",
+                "Notes: Local Phuket recipes at friendly prices"
+            ]
+        },
+        {
+            "id": 14,
+            "name_th": "โซนอาหาร หลาดปล่อยของ",
+            "name_eng": "Lard Ploy Kong Eats & Crafts",
+            "description": "Market-side food corner combining quick local bites with a casual social shopping atmosphere.",
+            "province": "Phuket",
+            "zone": "Phuket Town",
+            "tags": ["market", "shopping", "dining", "social"],
+            "average_price_per_pax": 210,
+            "metadata": [
+                "Opening hours: 16:00-22:30",
+                "Recommended time: Evening",
+                "Notes: Easy stop during market exploration"
+            ]
+        },
+        {
+            "id": 15,
+            "name_th": "ก๋วยเตี๋ยวราคาประหยัด ดอยสุเทพ",
+            "name_eng": "Suthep Budget Noodle Bar",
+            "description": "Budget noodle shop for fast and filling meals before heading to mountain attractions.",
+            "province": "Chiang Mai",
+            "zone": "Doi Suthep-Pui National Park",
+            "tags": ["local-food", "noodles", "budget", "quick-meal"],
+            "average_price_per_pax": 80,
+            "metadata": [
+                "Opening hours: 07:00-17:00",
+                "Recommended time: Breakfast and lunch",
+                "Notes: Budget noodle bowls under 100 THB"
+            ]
+        },
+        {
+            "id": 16,
+            "name_th": "ร้านข้าวแกง อินทนนท์เทรล",
+            "name_eng": "Inthanon Trail Rice Bowl",
+            "description": "Simple rice bowl place with affordable portions, ideal for quick lunch during park visits.",
+            "province": "Chiang Mai",
+            "zone": "Doi Inthanon National Park",
+            "tags": ["local-food", "budget", "lunch", "family-friendly"],
+            "average_price_per_pax": 95,
+            "metadata": [
+                "Opening hours: 08:00-16:30",
+                "Recommended time: Lunch",
+                "Notes: Fast service for travelers on tight schedules"
+            ]
+        },
+        {
+            "id": 17,
+            "name_th": "ร้านข้าวแกงนักศึกษา นิมมาน",
+            "name_eng": "Nimman Student Eats",
+            "description": "Student-friendly canteen style restaurant with budget menus and fast service in the Nimman zone.",
+            "province": "Chiang Mai",
+            "zone": "Nimmanhaemin Road (Sai Rang)",
+            "tags": ["budget", "street-food", "dining", "social"],
+            "average_price_per_pax": 90,
+            "metadata": [
+                "Opening hours: 10:30-21:00",
+                "Recommended time: Lunch and dinner",
+                "Notes: Student-priced meals with quick turnover"
+            ]
+        },
+        {
+            "id": 18,
+            "name_th": "สตรีทฟู้ดโต้รุ่ง ประตูเมือง",
+            "name_eng": "Pratu Mueang Night Market Bites",
+            "description": "Evening street food lineup featuring grilled skewers, stir-fry boxes, and local snack favorites.",
+            "province": "Chiang Mai",
+            "zone": "Across from Old City Gate (Pratu Mueang)",
+            "tags": ["walking-street", "street-food", "budget", "dinner"],
+            "average_price_per_pax": 70,
+            "metadata": [
+                "Opening hours: 17:30-23:00",
+                "Recommended time: Dinner",
+                "Notes: Ideal for evening budget food crawl"
+            ]
+        },
+        {
+            "id": 19,
+            "name_th": "มุมของทานเล่น หาดป่าตอง",
+            "name_eng": "Patong Beach Snack Corner",
+            "description": "Beachside snack stand with quick fried bites, fruit shakes, and wallet-friendly meal options.",
+            "province": "Phuket",
+            "zone": "Patong Beach",
+            "tags": ["beach", "street-food", "budget", "quick-meal"],
+            "average_price_per_pax": 100,
+            "metadata": [
+                "Opening hours: 11:00-22:00",
+                "Recommended time: Afternoon and sunset",
+                "Notes: Quick beach snacks at fixed low prices"
+            ]
+        },
+        {
+            "id": 20,
+            "name_th": "ศูนย์อาหารราคาประหยัด เมืองภูเก็ต",
+            "name_eng": "Phuket Town Economy Food Court",
+            "description": "Affordable food court with multiple local stalls offering budget lunch sets and drinks.",
+            "province": "Phuket",
+            "zone": "Phuket Town",
+            "tags": ["local-food", "budget", "family-friendly", "lunch"],
+            "average_price_per_pax": 85,
+            "metadata": [
+                "Opening hours: 09:30-20:30",
+                "Recommended time: Lunch",
+                "Notes: Multiple stalls, ideal for group preferences"
+            ]
+        },
+        {
+            "id": 21,
+            "name_th": "โจ๊กยามเช้า ดอยสุเทพ",
+            "name_eng": "Doi Suthep Morning Congee",
+            "description": "Early morning congee and soft-boiled egg shop perfect for a light breakfast before temple trips.",
+            "province": "Chiang Mai",
+            "zone": "Doi Suthep-Pui National Park",
+            "tags": ["breakfast", "local-food", "budget", "family-friendly"],
+            "average_price_per_pax": 65,
+            "metadata": [
+                "Opening hours: 05:30-11:00",
+                "Recommended time: Breakfast",
+                "Notes: Morning-only menu with very budget pricing"
+            ]
+        },
+        {
+            "id": 22,
+            "name_th": "ข้าวกล่องด่วน นิมมาน",
+            "name_eng": "Nimman Express Lunch Box",
+            "description": "Grab-and-go lunch box counter serving quick rice menus for office workers and travelers.",
+            "province": "Chiang Mai",
+            "zone": "Nimmanhaemin Road (Sai Rang)",
+            "tags": ["lunch", "budget", "quick-meal", "dining"],
+            "average_price_per_pax": 90,
+            "metadata": [
+                "Opening hours: 10:00-15:00",
+                "Recommended time: Lunch",
+                "Notes: Grab-and-go format for quick city itineraries"
+            ]
+        },
+        {
+            "id": 23,
+            "name_th": "ปิ้งย่างเสียบไม้ ถนนวัวลาย",
+            "name_eng": "Wua Lai Evening Grill",
+            "description": "Affordable evening grill stall with smoky skewers and simple dinner combos near the walking street.",
+            "province": "Chiang Mai",
+            "zone": "Across from Old City Gate (Pratu Mueang)",
+            "tags": ["dinner", "street-food", "budget", "walking-street"],
+            "average_price_per_pax": 95,
+            "metadata": [
+                "Opening hours: 17:00-22:30",
+                "Recommended time: Dinner",
+                "Notes: Popular after sunset for grilled skewers"
+            ]
+        },
+        {
+            "id": 24,
+            "name_th": "มื้อเช้ารับอรุณ เขานาคเกิด",
+            "name_eng": "Nakkerd Hill Sunrise Breakfast",
+            "description": "Morning cafe serving toast sets and coffee with sunrise viewpoints around Nakkerd Hill.",
+            "province": "Phuket",
+            "zone": "Nakkerd Hill",
+            "tags": ["breakfast", "cafe", "budget", "photo-worthy"],
+            "average_price_per_pax": 80,
+            "metadata": [
+                "Opening hours: 06:00-12:00",
+                "Recommended time: Breakfast",
+                "Notes: Sunrise-friendly seating and light menu"
+            ]
+        },
+        {
+            "id": 25,
+            "name_th": "ร้านข้าวแกงมื้อเที่ยง เมืองภูเก็ต",
+            "name_eng": "Phuket Town Daily Lunch",
+            "description": "Everyday lunch shop with rotating Thai dishes, quick service, and consistent low prices.",
+            "province": "Phuket",
+            "zone": "Phuket Town",
+            "tags": ["lunch", "local-food", "budget", "quick-meal"],
+            "average_price_per_pax": 85,
+            "metadata": [
+                "Opening hours: 10:30-16:00",
+                "Recommended time: Lunch",
+                "Notes: Rotating daily set menus"
+            ]
+        },
+        {
+            "id": 26,
+            "name_th": "รถเข็นสตรีทฟู้ดริมหาด ป่าตอง",
+            "name_eng": "Patong Sunset Dinner Cart",
+            "description": "Street cart for simple beachside dinners, popular for sunset hours and budget-friendly portions.",
+            "province": "Phuket",
+            "zone": "Patong Beach",
+            "tags": ["dinner", "street-food", "budget", "beach"],
+            "average_price_per_pax": 100,
+            "metadata": [
+                "Opening hours: 17:30-23:00",
+                "Recommended time: Dinner",
+                "Notes: Best value options after beach activities"
+            ]
+        }
+    ]
+}

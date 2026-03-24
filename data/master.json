@@ -35,7 +35,47 @@
         "hiking",
         "beach",
         "water-sports",
-        "nightlife"
+        "nightlife",
+        "street-food"
+    ],
+    "restaurant_tags": [
+        "local-food",
+        "cultural",
+        "family-friendly",
+        "dining",
+        "outdoor",
+        "nature",
+        "grill",
+        "photo-worthy",
+        "cafe",
+        "brunch",
+        "hiking",
+        "sightseeing",
+        "breakfast",
+        "lunch",
+        "hipster",
+        "social",
+        "shopping",
+        "dessert",
+        "street-food",
+        "walking-street",
+        "budget",
+        "lanna-art",
+        "dinner",
+        "vegetarian",
+        "healthy",
+        "seafood",
+        "beach",
+        "nightlife",
+        "sunset",
+        "market",
+        "noodles",
+        "quick-meal"
+    ],
+    "meal_times": [
+        "breakfast",
+        "lunch",
+        "dinner"
     ],
     "transportation_types": {
         "main_route": [
@@ -49,6 +89,20 @@
             "motorbike"
         ]
     },
+    "main_route_names": [
+        "Bangkok to Chiang Mai",
+        "Bangkok to Phuket",
+        "Chiang Mai to Bangkok",
+        "Phuket to Bangkok"
+    ],
+    "local_transport_names": [
+        "Airport Shuttle",
+        "Public Taxi",
+        "Motorbike Rental",
+        "Car Rental",
+        "Public Bus",
+        "Private Taxi"
+    ],
     "room_tags": [
         "Wi-Fi",
         "TV",
@@ -74,5 +128,14 @@
         "beach activities",
         "market exploration",
         "street food touring"
+    ],
+    "user_preference_tags": [
+        "family-friendly",
+        "adventure",
+        "indoor"
+    ],
+    "user_preferred_locations": [
+        "Chiang Mai",
+        "Phuket"
     ]
 }
