@@ -1,4 +1,5 @@
 import type { Plan } from "./travel-types";
+import ReactMarkdown from "react-markdown";
 
 type TravelPlanBubbleProps = {
   plan: Plan;
@@ -95,7 +96,9 @@ export default function TravelPlanBubble({
         <div className="space-y-2">
           {presenter.daily_plan_summaries.map((summary) => (
             <article key={summary.day} className="rounded-lg border border-slate-200 bg-white p-3">
-              <p className="text-sm whitespace-pre-line text-slate-700">{summary.message}</p>
+              <div className="prose prose-sm max-w-none text-slate-700 prose-headings:font-semibold prose-headings:text-slate-800 prose-strong:text-slate-800 prose-ul:my-1 prose-li:my-0">
+                <ReactMarkdown>{summary.message}</ReactMarkdown>
+              </div>
             </article>
           ))}
         </div>

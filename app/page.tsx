@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import masterJson from "@/data/master.json";
 import AgentChatPanel from "./components/AgentChatPanel";
 import TripRequestForm from "./components/TripRequestForm";
@@ -80,9 +81,8 @@ export default function Home() {
   };
 
   // Reusable function to update plan and messages
-  const updatePlanDisplay = async (updatedForm: FormData, planTitle: string, initialMessage?: string) => {
+  const updatePlanDisplay = async (updatedForm: FormData, planTitle: string, setStatus: (v: boolean) => void, initialMessage?: string) => {
     const generatedPlan = await buildPlan(updatedForm);
-    setPlan(generatedPlan);
 
     const planMessages: ChatMessage[] = [];
     if (initialMessage) {
@@ -90,8 +90,14 @@ export default function Home() {
     }
     planMessages.push({ role: "agent", kind: "plan", title: planTitle, plan: generatedPlan });
 
-    setMessages((prev) => [...prev, ...planMessages]);
-    setIsAdjustingPlan(false);
+    // flushSync ensures all state updates happen in a single render,
+    // so spinner and checkmark switch in the same frame
+    flushSync(() => {
+      setPlan(generatedPlan);
+      setMessages((prev) => [...prev, ...planMessages]);
+      setIsAdjustingPlan(false);
+      setStatus(false);
+    });
   };
 
   // Reusable function to handle plan streaming (for both initial and feedback)
@@ -139,8 +145,7 @@ export default function Home() {
           const finalMessage = typeof completionMessage === "function"
             ? completionMessage(notes)
             : completionMessage;
-          await updatePlanDisplay(updatedForm, planTitle, finalMessage);
-          setStatus(false);
+          await updatePlanDisplay(updatedForm, planTitle, setStatus, finalMessage);
         }
         console.log("stream:", data);
       },
