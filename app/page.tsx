@@ -13,6 +13,7 @@ import {
   toggleItem,
   validateForm,
 } from "./lib/travel-planner";
+import { fetchEventSource } from "@microsoft/fetch-event-source"
 
 const headingFontClassName = "font-sans";
 const bodyFontClassName = "font-sans";
@@ -61,7 +62,15 @@ export default function Home() {
 
   useEffect(() => {
     if (!chatLogRef.current) return;
-    chatLogRef.current.scrollTo({ top: chatLogRef.current.scrollHeight, behavior: "smooth" });
+    // Only auto-scroll when status messages are added, not when plan is displayed
+    const lastMessage = messages[messages.length - 1];
+    const shouldScroll = lastMessage && lastMessage.kind === "text";
+    
+    if (shouldScroll) {
+      chatLogRef.current.scrollTo({ top: chatLogRef.current.scrollHeight, behavior: "smooth" });
+    } else {
+      chatLogRef.current.scrollBy({ top: 200, behavior: "smooth" });
+    }
   }, [messages, loading, isAdjustingPlan]);
 
   const budgetPercent = (p: Plan) => {
@@ -70,45 +79,113 @@ export default function Home() {
     return Math.min(100, Math.round((total / requested) * 100));
   };
 
+  // Reusable function to update plan and messages
+  const updatePlanDisplay = async (updatedForm: FormData, planTitle: string, initialMessage?: string) => {
+    const generatedPlan = await buildPlan(updatedForm);
+    setPlan(generatedPlan);
+
+    const planMessages: ChatMessage[] = [];
+    if (initialMessage) {
+      planMessages.push({ role: "agent", kind: "text", content: initialMessage });
+    }
+    planMessages.push({ role: "agent", kind: "plan", title: planTitle, plan: generatedPlan });
+
+    setMessages((prev) => [...prev, ...planMessages]);
+    setIsAdjustingPlan(false);
+  };
+
+  // Reusable function to handle plan streaming (for both initial and feedback)
+  interface FetchPlanStreamOptions {
+    requestBody: Record<string, any>;
+    updatedForm: FormData;
+    planTitle: string;
+    loadingMessage: string;
+    completionMessage: string | ((notes?: string[]) => string);
+    setStatus: (loading: boolean) => void;
+    notes?: string[];
+  }
+
+  const fetchPlanStream = async ({
+    requestBody,
+    updatedForm,
+    planTitle,
+    loadingMessage,
+    completionMessage,
+    setStatus,
+    notes,
+  }: FetchPlanStreamOptions) => {
+    setStatus(true);
+    setMessages((prev) => [...prev, { role: "agent", kind: "text", content: loadingMessage }]);
+
+    fetchEventSource("/api/generate-plan", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+
+      async onopen(res) {
+        console.log("connected", res.status);
+      },
+
+      async onmessage(ev) {
+        const data = JSON.parse(ev.data);
+
+        if (data.type === "status") {
+          setMessages((prev) => [...prev, { role: "agent", kind: "text", content: `${data.message}` }]);
+        }
+
+        if (data.type === "done") {
+          const finalMessage = typeof completionMessage === "function"
+            ? completionMessage(notes)
+            : completionMessage;
+          await updatePlanDisplay(updatedForm, planTitle, finalMessage);
+          setStatus(false);
+        }
+        console.log("stream:", data);
+      },
+
+      onclose() {
+        console.log("done");
+      },
+
+      onerror(err) {
+        console.error(err);
+        throw err;
+      },
+    });
+  };
+
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setLoading(true);
     setPlan(null);
-    chatSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 
     const autoTags = inferTagsFromNote(form.userNote, form.preferredActivities, tags);
     const nextForm: FormData = { ...form, includeTags: autoTags };
     setForm(nextForm);
 
-    const userMessage = `My plan request: ${nextForm.location}, ${nextForm.days} days, THB ${nextForm.budget.toLocaleString()}, ${nextForm.travelers} traveler(s), note: ${nextForm.userNote || "none"}, auto-tags: ${nextForm.includeTags.join(", ")}, activities: ${nextForm.preferredActivities.join(", ")}.`;
-    setMessages((prev) => [...prev, { role: "user", kind: "text", content: userMessage }]);
-
-    const validation = validateForm(nextForm);
-    setMessages((prev) => [
-      ...prev,
-      ...validation.messages.map((content) => ({ role: "agent" as const, kind: "text" as const, content })),
-    ]);
-
-    if (!validation.feasible) {
-      setLoading(false);
-      return;
-    }
-
-    await new Promise((resolve) => setTimeout(resolve, 700));
-    const generatedPlan = buildPlan(nextForm);
-    setPlan(generatedPlan);
-    setMessages((prev) => [
-      ...prev,
-      {
-        role: "agent",
-        kind: "text",
-        content: `Plan Agent: Completed. Your itinerary is ready in chat. Send feedback and I will adjust it.`,
-      },
-      { role: "agent", kind: "plan", title: "Final Travel Plan", plan: generatedPlan },
-    ]);
-    setLoading(false);
+    // Scroll to chat section when form is submitted
     requestAnimationFrame(() => {
       chatSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    await fetchPlanStream({
+      requestBody: {
+        location: form.location,
+        budget: form.budget,
+        days: form.days,
+        travelers: form.travelers,
+        userNote: form.userNote,
+        mainRoute: form.mainRoute,
+        localTransport: form.localTransport,
+        includeTags: form.includeTags,
+        preferredActivities: form.preferredActivities,
+      },
+      updatedForm: nextForm,
+      planTitle: "Initial Travel Plan",
+      loadingMessage: "Plan Agent: Generating your initial plan...",
+      completionMessage: "Plan Agent: Your initial itinerary is ready. Send feedback and I will adjust it.",
+      setStatus: setLoading,
     });
   };
 
@@ -116,27 +193,37 @@ export default function Home() {
     const trimmed = value.trim();
     if (!trimmed || !plan) return;
 
-    setIsAdjustingPlan(true);
     chatSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     setMessages((prev) => [...prev, { role: "user", kind: "text", content: trimmed }]);
     setMessages((prev) => [
       ...prev,
-      { role: "agent", kind: "text", content: "Plan Agent: Feedback received. Adjusting your plan now." },
+      { role: "agent", kind: "text", content: "Plan Agent: Feedback received. Adjusting your plan..." },
     ]);
     setFeedback("");
 
-    await new Promise((resolve) => setTimeout(resolve, 700));
-
     const { nextForm, notes } = applyFeedbackToForm(form, trimmed);
     setForm(nextForm);
-    const updatedPlan = buildPlan(nextForm);
-    setPlan(updatedPlan);
-    setMessages((prev) => [
-      ...prev,
-      { role: "agent", kind: "text", content: `Plan Agent: Updated (${notes.join(", ")}).` },
-      { role: "agent", kind: "plan", title: "Updated Travel Plan", plan: updatedPlan },
-    ]);
-    setIsAdjustingPlan(false);
+
+    await fetchPlanStream({
+      requestBody: {
+        location: nextForm.location,
+        budget: nextForm.budget,
+        days: nextForm.days,
+        travelers: nextForm.travelers,
+        userNote: nextForm.userNote,
+        mainRoute: nextForm.mainRoute,
+        localTransport: nextForm.localTransport,
+        includeTags: nextForm.includeTags,
+        preferredActivities: nextForm.preferredActivities,
+      },
+      updatedForm: nextForm,
+      planTitle: "Updated Travel Plan",
+      loadingMessage: "Plan Agent: Processing your feedback...",
+      completionMessage: (notes) => `Plan Agent: Updated (${notes?.join(", ") || "applied changes"}).`,
+      setStatus: setIsAdjustingPlan,
+      notes,
+    });
+
     requestAnimationFrame(() => {
       chatSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
