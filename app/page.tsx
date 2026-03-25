@@ -270,6 +270,7 @@ export default function Home() {
           messages={messages}
           plan={plan}
           feedback={feedback}
+          loading={loading}
           isAdjustingPlan={isAdjustingPlan}
           feedbackSuggestions={feedbackSuggestions}
           chatSectionRef={chatSectionRef}

@@ -8,6 +8,7 @@ type AgentChatPanelProps = {
   messages: ChatMessage[];
   plan: Plan | null;
   feedback: string;
+  loading: boolean;
   isAdjustingPlan: boolean;
   feedbackSuggestions: string[];
   chatSectionRef: React.RefObject<HTMLElement | null>;
@@ -24,6 +25,7 @@ export default function AgentChatPanel({
   messages,
   plan,
   feedback,
+  loading,
   isAdjustingPlan,
   feedbackSuggestions,
   chatSectionRef,
@@ -33,6 +35,10 @@ export default function AgentChatPanel({
   onQuickFeedback,
   getBudgetPercent,
 }: AgentChatPanelProps) {
+  const isStreaming = loading || isAdjustingPlan;
+  const lastAgentTextIndex = messages.reduce((last, msg, i) =>
+    msg.role === "agent" && msg.kind === "text" ? i : last, -1
+  );
   return (
     <section ref={chatSectionRef} className="flex w-full flex-col gap-6">
       <div className="rounded-3xl border border-slate-200 bg-white/90 p-5 shadow-[0_20px_60px_rgba(29,53,87,0.12)] md:p-6">
@@ -60,7 +66,17 @@ export default function AgentChatPanel({
                     : "border border-slate-200 bg-white text-slate-800"
                 }`}
               >
-                {message.content}
+                {isStreaming && message.role === "agent" && index === lastAgentTextIndex ? (
+                  <span className="flex items-center gap-2">
+                    <svg className="h-3.5 w-3.5 animate-spin text-teal-500" viewBox="0 0 24 24" fill="none">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                    </svg>
+                    {message.content}
+                  </span>
+                ) : (
+                  message.content
+                )}
               </div>
             )
           )}
