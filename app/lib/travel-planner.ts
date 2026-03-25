@@ -74,7 +74,30 @@ export function inferTagsFromNote(note: string, preferredActivities: string[], a
   return finalTags;
 }
 
-export function buildPlan(_form: FormData): Plan {
+export async function buildPlan(_form: FormData): Promise<Plan> {
+  // const response = await fetch("/api/generate-plan", {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify({
+  //     location: _form.location,
+  //     budget: _form.budget,
+  //     days: _form.days,
+  //     travelers: _form.travelers,
+  //     userNote: _form.userNote,
+  //     mainRoute: _form.mainRoute,
+  //     localTransport: _form.localTransport,
+  //     includeTags: _form.includeTags,
+  //     preferredActivities: _form.preferredActivities,
+  //   }),
+  // });
+
+  // const json = await response.json();
+  // console.log("Received plan from API:", json);
+
+  // console.log("Raw output JSON:", JSON.stringify(json, null, 2));
+
   return JSON.parse(JSON.stringify(outputJson)) as Plan;
 }
 
