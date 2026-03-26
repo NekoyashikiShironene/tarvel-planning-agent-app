@@ -1,8 +1,8 @@
 import { Annotation } from "@langchain/langgraph";
 import * as z from "zod";
-import type { Plan } from "../components/travel-types";
 
 export const PlannerStageSchema = z.enum(["idle", "validated", "scheduled", "presented", "done", "error"]);
+
 
 const UserInputSchema = z.object({
 	location: z.string(),
@@ -13,11 +13,11 @@ const UserInputSchema = z.object({
 	mainRoute: z.string(),
 	localTransport: z.string(),
 	includeTags: z.array(z.string()),
-	preferredActivities: z.array(z.string()),
+	preferredActivities: z.array(z.string())
 });
 
 const ValidatorIntentSchema = z.object({
-	destination: z.string().nullable(),
+	destination: z.string(),
 	budget: z.number(),
 	days: z.number(),
 	pax_adult: z.number(),
@@ -27,10 +27,10 @@ const ValidatorIntentSchema = z.object({
 	attraction_tags: z.array(z.string()),
 	room_tags: z.array(z.string()),
 	restaurant_tags: z.array(z.string()),
-    special_instructions: z.string()
+	special_instructions: z.string()
 });
 
-const ValidatorOutputSchema = z.object({
+export const ValidatorOutputSchema = z.object({
 	intent: ValidatorIntentSchema,
 	is_feasible: z.boolean(),
 	reject_message: z.string(),
@@ -39,11 +39,11 @@ const ValidatorOutputSchema = z.object({
 const SchedulerActivitySchema = z.object({
 	time_slot: z.string(),
 	activity_type: z.enum(["restaurant", "attraction", "local_transport"]),
-	meal_time: z.enum(["breakfast", "lunch", "dinner"]).optional(),
+	meal_time: z.enum(["breakfast", "lunch", "dinner"]),
 	place_id: z.number(),
-	name: z.string().optional(),
-	name_th: z.string().optional(),
-	name_eng: z.string().optional(),
+	name: z.string().nullable(),
+	name_th: z.string().nullable(),
+	name_eng: z.string().nullable(),
 	cost: z.number(),
 	remark: z.string(),
 });
@@ -55,17 +55,18 @@ const SchedulerDailyPlanSchema = z.object({
 	daily_estimated_cost: z.number(),
 });
 
-const SchedulerOutputSchema = z.object({
-	financial_summary: z.object({
-		requested_budget: z.number(),
-		accommodation_cost: z.number(),
-		main_transport_cost: z.number(),
-		local_transport_cost: z.number(),
-		food_cost: z.number(),
-		activity_cost: z.number(),
-		total_actual_cost: z.number(),
-		remaining_budget: z.number(),
-	}),
+export const FinancialSummarySchema = z.object({
+	requested_budget: z.number(),
+	accommodation_cost: z.number(),
+	main_transport_cost: z.number(),
+	local_transport_cost: z.number(),
+	food_cost: z.number(),
+	activity_cost: z.number(),
+	total_actual_cost: z.number(),
+	remaining_budget: z.number(),
+});
+
+export const SchedulerOutputSchema = z.object({
 	accommodation: z.array(
 		z.object({
 			room_id: z.number(),
@@ -97,7 +98,14 @@ const SchedulerOutputSchema = z.object({
 	daily_plans: z.array(SchedulerDailyPlanSchema),
 });
 
-const PresenterOutputSchema = z.object({
+export const FullPlanSchema = z.object({
+	accommodation: SchedulerOutputSchema.shape.accommodation,
+	main_transportation: SchedulerOutputSchema.shape.main_transportation,
+	daily_plans: SchedulerOutputSchema.shape.daily_plans,
+	financial_summary: FinancialSummarySchema,
+});
+
+export const PresenterOutputSchema = z.object({
 	daily_plan_summaries: z.array(
 		z.object({
 			day: z.number(),
@@ -121,7 +129,7 @@ export const TravelPlannerStateSchema = z.object({
 const overwrite = <T,>(_current: T, update: T): T => update;
 
 export const TravelPlannerState = Annotation.Root({
-	user_input: Annotation<z.infer<typeof UserInputSchema>>({
+	user_input: Annotation<z.infer<typeof UserInputSchema> | null | undefined>({
 		reducer: overwrite,
 		default: () => ({
 			location: "",
@@ -133,25 +141,57 @@ export const TravelPlannerState = Annotation.Root({
 			localTransport: "",
 			includeTags: [],
 			preferredActivities: [],
+			user_action: "submit_form",
+			user_feedback_message: "",
 		}),
 	}),
-	validator_output: Annotation<z.infer<typeof ValidatorOutputSchema> | null>({
+	validator_output: Annotation<z.infer<typeof ValidatorOutputSchema> | null | undefined>({
 		reducer: overwrite,
-		default: () => null,
+		default: () => ValidatorOutputSchema.parse({ intent: { destination: "", budget: 0, days: 0, pax_adult: 0, pax_child: 0, main_transport_preference: null, local_transport_preference: null, attraction_tags: [], room_tags: [], restaurant_tags: [], special_instructions: "" }, is_feasible: false, reject_message: "" }),
 	}),
-	scheduler_output: Annotation<z.infer<typeof SchedulerOutputSchema> | null>({
+	scheduler_output: Annotation<z.infer<typeof FullPlanSchema> | null | undefined>({
 		reducer: overwrite,
-		default: () => null,
+		default: () =>
+			FullPlanSchema.parse({
+				accommodation: [],
+				main_transportation: {
+					outbound: {
+						transport_id: 0,
+						type: "",
+						name: "",
+						cost: 0,
+						schedule: "",
+					},
+					inbound: {
+						transport_id: 0,
+						type: "",
+						name: "",
+						cost: 0,
+						schedule: "",
+					},
+				},
+				daily_plans: [],
+				financial_summary: {
+					requested_budget: 0,
+					accommodation_cost: 0,
+					main_transport_cost: 0,
+					local_transport_cost: 0,
+					food_cost: 0,
+					activity_cost: 0,
+					total_actual_cost: 0,
+					remaining_budget: 0,
+				},
+			}),
 	}),
-	presenter_output: Annotation<z.infer<typeof PresenterOutputSchema> | null>({
+	presenter_output: Annotation<z.infer<typeof PresenterOutputSchema> | null | undefined>({
 		reducer: overwrite,
-		default: () => null,
+		default: () => PresenterOutputSchema.parse({ daily_plan_summaries: [], transportation_summary: "", budget_summary: "", adjustment_suggestions: [] }),
 	}),
-	stage: Annotation<z.infer<typeof PlannerStageSchema>>({
+	user_feedback_message: Annotation<string | null | undefined>({
 		reducer: overwrite,
-		default: () => "idle",
+		default: () => "",
 	}),
-	error: Annotation<string | null>({
+	error: Annotation<string | null | undefined>({
 		reducer: overwrite,
 		default: () => null,
 	}),
