@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import type { FormData } from "./travel-types";
 
 type TripRequestFormProps = {
@@ -39,6 +40,55 @@ export default function TripRequestForm({
   onLocalTransportChange,
   onToggleActivity,
 }: TripRequestFormProps) {
+  const [budgetInput, setBudgetInput] = useState(String(form.budget));
+  const [daysInput, setDaysInput] = useState(String(form.days));
+  const [travelersInput, setTravelersInput] = useState(String(form.travelers));
+
+  useEffect(() => {
+    setBudgetInput(String(form.budget));
+  }, [form.budget]);
+
+  useEffect(() => {
+    setDaysInput(String(form.days));
+  }, [form.days]);
+
+  useEffect(() => {
+    setTravelersInput(String(form.travelers));
+  }, [form.travelers]);
+
+  const commitBudget = () => {
+    const parsed = Number.parseInt(budgetInput, 10);
+    if (Number.isNaN(parsed)) {
+      setBudgetInput(String(form.budget));
+      return;
+    }
+    const normalized = Math.max(1000, parsed);
+    onBudgetChange(normalized);
+    setBudgetInput(String(normalized));
+  };
+
+  const commitDays = () => {
+    const parsed = Number.parseInt(daysInput, 10);
+    if (Number.isNaN(parsed)) {
+      setDaysInput(String(form.days));
+      return;
+    }
+    const normalized = Math.min(14, Math.max(1, parsed));
+    onDaysChange(normalized);
+    setDaysInput(String(normalized));
+  };
+
+  const commitTravelers = () => {
+    const parsed = Number.parseInt(travelersInput, 10);
+    if (Number.isNaN(parsed)) {
+      setTravelersInput(String(form.travelers));
+      return;
+    }
+    const normalized = Math.min(8, Math.max(1, parsed));
+    onTravelersChange(normalized);
+    setTravelersInput(String(normalized));
+  };
+
   return (
     <section className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_20px_80px_rgba(12,31,74,0.12)] backdrop-blur md:p-8">
       <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Travel Plan Agent</p>
@@ -87,8 +137,9 @@ export default function TripRequestForm({
             <input
               type="number"
               min={1000}
-              value={form.budget}
-              onChange={(event) => onBudgetChange(Number(event.target.value) || form.budget)}
+              value={budgetInput}
+              onChange={(event) => setBudgetInput(event.target.value)}
+              onBlur={commitBudget}
               className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 outline-none transition focus:border-teal-500"
             />
           </label>
@@ -98,8 +149,9 @@ export default function TripRequestForm({
               type="number"
               min={1}
               max={14}
-              value={form.days}
-              onChange={(event) => onDaysChange(Number(event.target.value) || form.days)}
+              value={daysInput}
+              onChange={(event) => setDaysInput(event.target.value)}
+              onBlur={commitDays}
               className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 outline-none transition focus:border-teal-500"
             />
           </label>
@@ -109,8 +161,9 @@ export default function TripRequestForm({
               type="number"
               min={1}
               max={8}
-              value={form.travelers}
-              onChange={(event) => onTravelersChange(Number(event.target.value) || form.travelers)}
+              value={travelersInput}
+              onChange={(event) => setTravelersInput(event.target.value)}
+              onBlur={commitTravelers}
               className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 outline-none transition focus:border-teal-500"
             />
           </label>

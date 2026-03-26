@@ -1,12 +1,13 @@
 import type React from "react";
 import TravelPlanBubble from "./TravelPlanBubble";
-import type { ChatMessage, Plan } from "./travel-types";
+import type { ChatMessage } from "./travel-types";
+import type { TravelPlannerStateType } from "../lib/state";
 
 type AgentChatPanelProps = {
   headingFontClassName: string;
   budgetStatus: string;
   messages: ChatMessage[];
-  plan: Plan | null;
+  plan: TravelPlannerStateType | null;
   feedback: string;
   loading: boolean;
   isAdjustingPlan: boolean;
@@ -16,7 +17,7 @@ type AgentChatPanelProps = {
   onFeedbackChange: (value: string) => void;
   onSubmitFeedback: (event: React.FormEvent<HTMLFormElement>) => void;
   onQuickFeedback: (value: string) => void;
-  getBudgetPercent: (plan: Plan) => number;
+  getBudgetPercent: (plan: TravelPlannerStateType) => number;
 };
 
 export default function AgentChatPanel({
@@ -71,6 +72,14 @@ export default function AgentChatPanel({
                     <svg className="h-3.5 w-3.5 animate-spin text-teal-500" viewBox="0 0 24 24" fill="none">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                    </svg>
+                    {message.content}
+                  </span>
+                ) : message.error ? (
+                  <span className="flex items-center gap-2">
+                    <svg className="h-3.5 w-3.5 shrink-0 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
                     </svg>
                     {message.content}
                   </span>
