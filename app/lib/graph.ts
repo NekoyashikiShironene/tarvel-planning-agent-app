@@ -1,4 +1,4 @@
-import { StateSchema, MessagesValue, GraphNode, StateGraph, START, END, Annotation } from "@langchain/langgraph";
+import { StateSchema, MessagesValue, GraphNode, StateGraph, START, END, MemorySaver } from "@langchain/langgraph";
 import { TravelPlannerState } from "./state";
 import * as n from "./nodes";
 
@@ -6,11 +6,12 @@ const workflow = new StateGraph(TravelPlannerState)
     .addNode("validator", n.validatorNode)
     .addNode("scheduler", n.schedulerNode)
     .addNode("presenter", n.presenterNode)
+    .addNode("route_presenter", n.routePresentationNode)
     .addEdge(START, "validator")
     .addConditionalEdges("validator", n.routeValidationNode, { Pass: "scheduler", Fail: END })
     .addEdge("scheduler", "presenter")
-    .addEdge("presenter", END);
+    .addEdge("presenter", "route_presenter")
+    .addEdge("route_presenter", END);
 
-export const app = workflow.compile();
-
-app.invoke({})
+const checkpointer = new MemorySaver();
+export const app = workflow.compile({ checkpointer });
