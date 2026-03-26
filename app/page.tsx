@@ -8,13 +8,13 @@ import TripRequestForm from "./components/TripRequestForm";
 import type { ChatMessage, FormData, Plan } from "./components/travel-types";
 import {
   applyFeedbackToForm,
-  buildPlan,
   formDefaults,
   inferTagsFromNote,
   toggleItem,
-  validateForm,
 } from "./lib/travel-planner";
 import { fetchEventSource } from "@microsoft/fetch-event-source"
+import { TravelPlannerStateType } from "./lib/state";
+import { getSessionId } from "./lib/session";
 
 const headingFontClassName = "font-sans";
 const bodyFontClassName = "font-sans";
@@ -29,7 +29,7 @@ export default function Home() {
         "Welcome to Travel Plan Agent. Fill in your trip details, then I will validate and chat with you until the trip is feasible.",
     },
   ]);
-  const [plan, setPlan] = useState<Plan | null>(null);
+  const [plan, setPlan] = useState<TravelPlannerStateType | null>(null);
   const [loading, setLoading] = useState(false);
   const [feedback, setFeedback] = useState("");
   const [isAdjustingPlan, setIsAdjustingPlan] = useState(false);
@@ -55,7 +55,7 @@ export default function Home() {
 
   const budgetStatus = useMemo(() => {
     if (!plan) return "Awaiting feasible input";
-    const remaining = plan.scheduler_output.financial_summary.remaining_budget;
+    const remaining = plan.scheduler_output?.financial_summary?.remaining_budget || 0;
     return remaining >= 0
       ? `On budget, THB ${remaining.toLocaleString()} left`
       : `Over budget by THB ${Math.abs(remaining).toLocaleString()}`;
@@ -63,7 +63,6 @@ export default function Home() {
 
   useEffect(() => {
     if (!chatLogRef.current) return;
-    // Only auto-scroll when status messages are added, not when plan is displayed
     const lastMessage = messages[messages.length - 1];
     const shouldScroll = lastMessage && lastMessage.kind === "text";
     
@@ -74,26 +73,25 @@ export default function Home() {
     }
   }, [messages, loading, isAdjustingPlan]);
 
-  const budgetPercent = (p: Plan) => {
+  const budgetPercent = (p: TravelPlannerStateType) => {
     const requested = p.scheduler_output.financial_summary.requested_budget || form.budget || 1;
     const total = p.scheduler_output.financial_summary.total_actual_cost;
     return Math.min(100, Math.round((total / requested) * 100));
   };
 
   // Reusable function to update plan and messages
-  const updatePlanDisplay = async (updatedForm: FormData, planTitle: string, setStatus: (v: boolean) => void, initialMessage?: string) => {
-    const generatedPlan = await buildPlan(updatedForm);
+  const updatePlanDisplay = async (planObject: TravelPlannerStateType, planTitle: string, setStatus: (v: boolean) => void, initialMessage?: string) => {
 
     const planMessages: ChatMessage[] = [];
     if (initialMessage) {
       planMessages.push({ role: "agent", kind: "text", content: initialMessage });
     }
-    planMessages.push({ role: "agent", kind: "plan", title: planTitle, plan: generatedPlan });
+    planMessages.push({ role: "agent", kind: "plan", title: planTitle, plan: planObject });
 
     // flushSync ensures all state updates happen in a single render,
     // so spinner and checkmark switch in the same frame
     flushSync(() => {
-      setPlan(generatedPlan);
+      setPlan(planObject);
       setMessages((prev) => [...prev, ...planMessages]);
       setIsAdjustingPlan(false);
       setStatus(false);
@@ -103,7 +101,7 @@ export default function Home() {
   // Reusable function to handle plan streaming (for both initial and feedback)
   interface FetchPlanStreamOptions {
     requestBody: Record<string, any>;
-    updatedForm: FormData;
+    mode: "submit" | "feedback";
     planTitle: string;
     loadingMessage: string;
     completionMessage: string | ((notes?: string[]) => string);
@@ -113,7 +111,7 @@ export default function Home() {
 
   const fetchPlanStream = async ({
     requestBody,
-    updatedForm,
+    mode,
     planTitle,
     loadingMessage,
     completionMessage,
@@ -123,7 +121,8 @@ export default function Home() {
     setStatus(true);
     setMessages((prev) => [...prev, { role: "agent", kind: "text", content: loadingMessage }]);
 
-    fetchEventSource("/api/generate-plan", {
+    const sessionId = getSessionId();
+    fetchEventSource(`/api/generate-plan/${sessionId}?mode=${mode}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -145,7 +144,15 @@ export default function Home() {
           const finalMessage = typeof completionMessage === "function"
             ? completionMessage(notes)
             : completionMessage;
-          await updatePlanDisplay(updatedForm, planTitle, setStatus, finalMessage);
+
+          const finalState = data.data as TravelPlannerStateType;
+          if (finalState.validator_output?.is_feasible) {
+            await updatePlanDisplay(finalState, planTitle, setStatus, finalMessage);
+          }
+          else {
+            setMessages((prev) => [...prev, { role: "agent", kind: "text", content: finalState.validator_output?.reject_message, error: true }]);
+            setStatus(false);
+          }
         }
         console.log("stream:", data);
       },
@@ -186,7 +193,7 @@ export default function Home() {
         includeTags: form.includeTags,
         preferredActivities: form.preferredActivities,
       },
-      updatedForm: nextForm,
+      mode: "submit",
       planTitle: "Initial Travel Plan",
       loadingMessage: "Plan Agent: Generating your initial plan...",
       completionMessage: "Plan Agent: Your initial itinerary is ready. Send feedback and I will adjust it.",
@@ -211,17 +218,9 @@ export default function Home() {
 
     await fetchPlanStream({
       requestBody: {
-        location: nextForm.location,
-        budget: nextForm.budget,
-        days: nextForm.days,
-        travelers: nextForm.travelers,
-        userNote: nextForm.userNote,
-        mainRoute: nextForm.mainRoute,
-        localTransport: nextForm.localTransport,
-        includeTags: nextForm.includeTags,
-        preferredActivities: nextForm.preferredActivities,
+        feedback_message: trimmed,
       },
-      updatedForm: nextForm,
+      mode: "feedback",
       planTitle: "Updated Travel Plan",
       loadingMessage: "Plan Agent: Processing your feedback...",
       completionMessage: (notes) => `Plan Agent: Updated (${notes?.join(", ") || "applied changes"}).`,
