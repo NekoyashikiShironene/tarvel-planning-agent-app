@@ -52,9 +52,9 @@ export default function AgentChatPanel({
             message.kind === "plan" && message.plan ? (
               <div key={`${message.role}-${index}`} className="max-w-[98%] rounded-2xl border border-slate-200 bg-white p-2">
                 <TravelPlanBubble
-                  plan={message.plan}
+                  plan={message.plan as TravelPlannerStateType}
                   title={message.title}
-                  budgetPercent={getBudgetPercent(message.plan)}
+                  budgetPercent={getBudgetPercent(message.plan as TravelPlannerStateType)}
                   headingFontClassName={headingFontClassName}
                 />
               </div>

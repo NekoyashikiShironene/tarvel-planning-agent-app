@@ -1,8 +1,8 @@
-import type { Plan } from "./travel-types";
+import { TravelPlannerStateType } from "../lib/state";
 import ReactMarkdown from "react-markdown";
 
 type TravelPlanBubbleProps = {
-  plan: Plan;
+  plan: TravelPlannerStateType;
   title?: string;
   budgetPercent: number;
   headingFontClassName: string;
@@ -12,7 +12,7 @@ function formatCurrency(value: number): string {
   return `THB ${value.toLocaleString()}`;
 }
 
-function getActivityLabel(name?: string, nameTh?: string, nameEng?: string): string {
+function getActivityLabel(name?: string | null, nameTh?: string | null, nameEng?: string | null): string {
   return nameEng ?? nameTh ?? name ?? "Unnamed activity";
 }
 
@@ -22,8 +22,8 @@ export default function TravelPlanBubble({
   budgetPercent,
   headingFontClassName,
 }: TravelPlanBubbleProps) {
-  const scheduler = plan.scheduler_output;
-  const presenter = plan.presenter_output;
+  const scheduler = plan.scheduler_output as NonNullable<typeof plan.scheduler_output>;
+  const presenter = plan.presenter_output as NonNullable<typeof plan.presenter_output>;
   const financial = scheduler.financial_summary;
   const stay = scheduler.accommodation[0];
 

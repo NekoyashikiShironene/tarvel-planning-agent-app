@@ -39,7 +39,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     else {
         state = {
             user_feedback_message: body.feedback_message as string
-        }
+        } as TravelPlannerStateType
     }
 
     const encoder = new TextEncoder()

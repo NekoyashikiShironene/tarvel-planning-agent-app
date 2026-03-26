@@ -5,7 +5,7 @@ import { flushSync } from "react-dom";
 import masterJson from "@/data/master.json";
 import AgentChatPanel from "./components/AgentChatPanel";
 import TripRequestForm from "./components/TripRequestForm";
-import type { ChatMessage, FormData, Plan } from "./components/travel-types";
+import type { ChatMessage, FormData } from "./components/travel-types";
 import {
   applyFeedbackToForm,
   formDefaults,
@@ -74,8 +74,8 @@ export default function Home() {
   }, [messages, loading, isAdjustingPlan]);
 
   const budgetPercent = (p: TravelPlannerStateType) => {
-    const requested = p.scheduler_output.financial_summary.requested_budget || form.budget || 1;
-    const total = p.scheduler_output.financial_summary.total_actual_cost;
+    const requested = p.scheduler_output?.financial_summary.requested_budget || form.budget || 1;
+    const total = p.scheduler_output?.financial_summary.total_actual_cost || 0;
     return Math.min(100, Math.round((total / requested) * 100));
   };
 
