@@ -1,3 +1,5 @@
+import { TravelPlannerStateType } from "../lib/state";
+
 export type FormData = {
   location: string;
   budget: number;
@@ -117,6 +119,7 @@ export type ChatMessage = {
   role: "user" | "agent";
   content?: string;
   kind?: "text" | "plan";
-  plan?: Plan;
+  plan?: TravelPlannerStateType;
   title?: string;
+  error?: boolean;
 };
