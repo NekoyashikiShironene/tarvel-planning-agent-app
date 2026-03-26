@@ -35,7 +35,7 @@ You must output ONLY a valid JSON object matching the exact structure below, wit
         "daily_plan_summaries": [
             {
                 "day": 1,
-                "message": "## วันที่ 1: [Theme Title]\\n- [Time/Activity] **[Location/Restaurant Name]**\\n- [Time/Activity] **[Location/Restaurant Name]**\\n- ค่าใช้จ่ายโดยประมาณทั้งวัน: **[Cost]**"
+                "message": "## วันที่ 1: [Theme Title]\n- [Time/Activity] **[Location/Restaurant Name]**\n- [Time/Activity] **[Location/Restaurant Name]**\n- ค่าใช้จ่ายโดยประมาณทั้งวัน: **[Cost]**"
             }
         ],
         "transportation_summary": "string summarizing travel methods and costs",
