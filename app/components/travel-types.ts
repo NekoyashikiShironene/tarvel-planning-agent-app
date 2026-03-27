@@ -1,5 +1,12 @@
 import { TravelPlannerStateType } from "../lib/state";
 
+export type SavedPlan = {
+  plan_id: number;
+  user_id: number;
+  plan_data: TravelPlannerStateType;
+  created_at: string;
+};
+
 export type FormData = {
   location: string;
   budget: number;
