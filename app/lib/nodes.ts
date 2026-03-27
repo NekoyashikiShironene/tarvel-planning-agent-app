@@ -15,11 +15,8 @@ import fs from 'fs/promises';
 import path from "path";
 import master from "../../data/master.json";
 
-
-
-
-const validatorModel = new ChatOpenAI({ model: "gpt-4.1-mini" });
-const schedulerModel = new ChatOpenAI({ model: "gpt-4.1" });
+const validatorModel = new ChatOpenAI({ model: "gpt-5.4-nano-2026-03-17" });
+const schedulerModel = new ChatOpenAI({ model: "gpt-5.4-nano-2026-03-17" });
 const presenterModel = new ChatOpenAI({ model: "gpt-4.1-mini", temperature: 0.7 });
 
 export const validatorNode: GraphNode<TravelPlannerStateType> = async (state, config) => {
@@ -126,21 +123,22 @@ export const schedulerNode: GraphNode<TravelPlannerStateType> = async (state, co
 export const presenterNode: GraphNode<TravelPlannerStateType> = async (state, config) => {
     try {
         const modelWithStructure = presenterModel.withStructuredOutput(PresenterOutputSchema);
-        const presenterOutput = state.scheduler_output;
-        const user_intent = (state.validator_output as NonNullable<typeof state.validator_output>).intent;
+        const schedulerOutput = state.scheduler_output;
+        const validatorOutput = (state.validator_output as NonNullable<typeof state.validator_output>);
 
         const filePath = path.resolve(process.cwd(), 'prompts', 'presenter_prompt.txt');
         const presenterPrompt = await fs.readFile(filePath, 'utf-8');
 
         const context = [
             { role: "system", content: presenterPrompt },
-            { role: "system", content: `User Intent: ${JSON.stringify(user_intent)}` },
-            { role: "user", content: JSON.stringify(presenterOutput) },
+            { role: "system", content: `Validator Output and User Intent: ${JSON.stringify(validatorOutput)}` },
         ];
 
-        const response = await modelWithStructure.invoke(context);
+        if (state.validator_output?.is_feasible) {
+            context.push({ role: "system", content: `Itinerary Data: ${JSON.stringify(schedulerOutput)}` });
+        }
 
-        console.log("Presenter response:", JSON.stringify(response, null, 2));
+        const response = await modelWithStructure.invoke(context);
 
         return {
             presenter_output: response
