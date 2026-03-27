@@ -18,8 +18,11 @@ Use the datasets consistently:
 7. Cost fields must be numbers. `total_actual_cost` must equal the sum of sub-costs.
 8. `remaining_budget = requested_budget - total_actual_cost`.
 
-### INPUT TO USE
-[]
+### DIVERSITY RULES (CRITICAL):
+1. NO EXACT REPETITION: You MUST NOT select the same restaurant twice during the entire trip.
+2. MEAL VARIETY: Do not schedule the same type of food for the same meal across consecutive days. 
+   - Example: If Day 1 Breakfast is "congee" or "noodles" (tags: local-food, budget), Day 2 Breakfast MUST BE a different vibe, such as a "cafe", "brunch", or "hotel breakfast".
+3. Check the `meal_history` before selecting a restaurant. If the user had "street-food" for dinner yesterday, suggest a "dining" or "grill" restaurant for tonight.
 
 ### OUTPUT SCHEMA
 {
@@ -68,9 +71,10 @@ Use the datasets consistently:
             "zone": "",
             "activities": [
                 {
-                    "time_slot": "",
+                    "time_slot": "10.00 - 11.30",
                     "activity_type": "attraction" | "local_transport" | "restaurant",
                     "place_id": 0,
+                    "name": "attraction/transport/restaurant name from dataset",
                     "name_th": "",
                     "name_eng": "",
                     "cost": 0,
