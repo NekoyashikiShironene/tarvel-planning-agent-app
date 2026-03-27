@@ -33,7 +33,7 @@ const ValidatorIntentSchema = z.object({
 export const ValidatorOutputSchema = z.object({
 	intent: ValidatorIntentSchema,
 	is_feasible: z.boolean(),
-	reject_message: z.string(),
+	reason: z.string(),
 });
 
 const SchedulerActivitySchema = z.object({
@@ -106,6 +106,7 @@ export const FullPlanSchema = z.object({
 });
 
 export const PresenterOutputSchema = z.object({
+	topic: z.string(),
 	daily_plan_summaries: z.array(
 		z.object({
 			day: z.number(),
@@ -115,6 +116,7 @@ export const PresenterOutputSchema = z.object({
 	transportation_summary: z.string(),
 	budget_summary: z.string(),
 	adjustment_suggestions: z.array(z.string()),
+	reject_message: z.string()
 });
 
 export const TravelPlannerStateSchema = z.object({
@@ -147,7 +149,7 @@ export const TravelPlannerState = Annotation.Root({
 	}),
 	validator_output: Annotation<z.infer<typeof ValidatorOutputSchema> | null | undefined>({
 		reducer: overwrite,
-		default: () => ValidatorOutputSchema.parse({ intent: { destination: "", budget: 0, days: 0, pax_adult: 0, pax_child: 0, main_transport_preference: null, local_transport_preference: null, attraction_tags: [], room_tags: [], restaurant_tags: [], special_instructions: "" }, is_feasible: false, reject_message: "" }),
+		default: () => ValidatorOutputSchema.parse({ intent: { destination: "", budget: 0, days: 0, pax_adult: 0, pax_child: 0, main_transport_preference: null, local_transport_preference: null, attraction_tags: [], room_tags: [], restaurant_tags: [], special_instructions: "" }, is_feasible: false, reason: "" }),
 	}),
 	scheduler_output: Annotation<z.infer<typeof FullPlanSchema> | null | undefined>({
 		reducer: overwrite,
@@ -185,7 +187,7 @@ export const TravelPlannerState = Annotation.Root({
 	}),
 	presenter_output: Annotation<z.infer<typeof PresenterOutputSchema> | null | undefined>({
 		reducer: overwrite,
-		default: () => PresenterOutputSchema.parse({ daily_plan_summaries: [], transportation_summary: "", budget_summary: "", adjustment_suggestions: [] }),
+		default: () => PresenterOutputSchema.parse({ topic: "", daily_plan_summaries: [], transportation_summary: "", budget_summary: "", adjustment_suggestions: [], reject_message: "" }),
 	}),
 	user_feedback_message: Annotation<string | null | undefined>({
 		reducer: overwrite,

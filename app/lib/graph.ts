@@ -8,7 +8,7 @@ const workflow = new StateGraph(TravelPlannerState)
     .addNode("presenter", n.presenterNode)
     .addNode("route_presenter", n.routePresentationNode)
     .addEdge(START, "validator")
-    .addConditionalEdges("validator", n.routeValidationNode, { Pass: "scheduler", Fail: END })
+    .addConditionalEdges("validator", n.routeValidationNode, { Pass: "scheduler", Fail: "presenter" })
     .addEdge("scheduler", "presenter")
     .addEdge("presenter", "route_presenter")
     .addEdge("route_presenter", END);
