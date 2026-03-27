@@ -17,6 +17,7 @@ type AgentChatPanelProps = {
   onFeedbackChange: (value: string) => void;
   onSubmitFeedback: (event: React.FormEvent<HTMLFormElement>) => void;
   onQuickFeedback: (value: string) => void;
+  onOpenSavePicker: () => void;
   getBudgetPercent: (plan: TravelPlannerStateType) => number;
 };
 
@@ -34,6 +35,7 @@ export default function AgentChatPanel({
   onFeedbackChange,
   onSubmitFeedback,
   onQuickFeedback,
+  onOpenSavePicker,
   getBudgetPercent,
 }: AgentChatPanelProps) {
   const isStreaming = loading || isAdjustingPlan;
@@ -108,13 +110,27 @@ export default function AgentChatPanel({
               placeholder="Send feedback, e.g. 'more adventure and less shopping' or 'make it cheaper'"
               className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-teal-500"
             />
-            <button
-              type="submit"
-              disabled={isAdjustingPlan || feedback.trim().length === 0}
-              className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {isAdjustingPlan ? "Adjusting..." : "Send Feedback"}
-            </button>
+            <div className="flex gap-2">
+              <button
+                type="submit"
+                disabled={isAdjustingPlan || feedback.trim().length === 0}
+                className="flex-1 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isAdjustingPlan ? "Adjusting..." : "Send Feedback"}
+              </button>
+              <button
+                type="button"
+                onClick={onOpenSavePicker}
+                disabled={isAdjustingPlan}
+                title="Save a draft plan"
+                className="flex items-center gap-1.5 rounded-xl border border-teal-300 bg-teal-50 px-3 py-2 text-sm font-semibold text-teal-700 transition hover:bg-teal-100 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                </svg>
+                Save Draft
+              </button>
+            </div>
             <div className="md:col-span-2">
               <p className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">Quick feedback</p>
               <div className="flex flex-wrap gap-2">

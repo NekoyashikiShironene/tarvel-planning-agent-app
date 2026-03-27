@@ -4,8 +4,11 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import masterJson from "@/data/master.json";
 import AgentChatPanel from "./components/AgentChatPanel";
+import SavedPlansModal from "./components/SavedPlansModal";
+import SaveDraftPickerModal from "./components/SaveDraftPickerModal";
+import type { DraftItem } from "./components/SaveDraftPickerModal";
 import TripRequestForm from "./components/TripRequestForm";
-import type { ChatMessage, FormData } from "./components/travel-types";
+import type { ChatMessage, FormData, SavedPlan } from "./components/travel-types";
 import {
   applyFeedbackToForm,
   formDefaults,
@@ -33,6 +36,9 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [feedback, setFeedback] = useState("");
   const [isAdjustingPlan, setIsAdjustingPlan] = useState(false);
+  const [savedPlans, setSavedPlans] = useState<SavedPlan[]>([]);
+  const [showSavedPlans, setShowSavedPlans] = useState(false);
+  const [showSavePicker, setShowSavePicker] = useState(false);
   const chatSectionRef = useRef<HTMLElement | null>(null);
   const chatLogRef = useRef<HTMLDivElement | null>(null);
   const feedbackSuggestions = [
@@ -73,6 +79,17 @@ export default function Home() {
     }
   }, [messages, loading, isAdjustingPlan]);
 
+  useEffect(() => {
+    async function loadSavedPlans() {
+      const response = await fetch('/api/plan?user_id=' + getSessionId());
+      if (response.ok) {
+        const data: SavedPlan[] = await response.json();
+        setSavedPlans(data);
+      }
+    }
+    loadSavedPlans();
+  }, []);
+
   const budgetPercent = (p: TravelPlannerStateType) => {
     const requested = p.scheduler_output?.financial_summary.requested_budget || form.budget || 1;
     const total = p.scheduler_output?.financial_summary.total_actual_cost || 0;
@@ -102,7 +119,6 @@ export default function Home() {
   interface FetchPlanStreamOptions {
     requestBody: Record<string, any>;
     mode: "submit" | "feedback";
-    planTitle: string;
     loadingMessage: string;
     completionMessage: string | ((notes?: string[]) => string);
     setStatus: (loading: boolean) => void;
@@ -112,7 +128,6 @@ export default function Home() {
   const fetchPlanStream = async ({
     requestBody,
     mode,
-    planTitle,
     loadingMessage,
     completionMessage,
     setStatus,
@@ -122,12 +137,16 @@ export default function Home() {
     setMessages((prev) => [...prev, { role: "agent", kind: "text", content: loadingMessage }]);
 
     const sessionId = getSessionId();
+    const controller = new AbortController();
+    
     fetchEventSource(`/api/generate-plan/${sessionId}?mode=${mode}`, {
+      signal: controller.signal,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(requestBody),
+      openWhenHidden: true,
 
       async onopen(res) {
         console.log("connected", res.status);
@@ -147,25 +166,75 @@ export default function Home() {
 
           const finalState = data.data as TravelPlannerStateType;
           if (finalState.validator_output?.is_feasible) {
-            await updatePlanDisplay(finalState, planTitle, setStatus, finalMessage);
+            await updatePlanDisplay(finalState, finalState.presenter_output?.topic || "Updated Travel Plan", setStatus, finalMessage);
           }
           else {
-            setMessages((prev) => [...prev, { role: "agent", kind: "text", content: finalState.validator_output?.reject_message, error: true }]);
+            setMessages((prev) => [...prev, { role: "agent", kind: "text", content: finalState.presenter_output?.reject_message, error: true }]);
             setStatus(false);
           }
+          controller.abort();
         }
         console.log("stream:", data);
       },
 
       onclose() {
         console.log("done");
+        controller.abort();
       },
 
       onerror(err) {
         console.error(err);
+        controller.abort();
         throw err;
       },
     });
+  };
+
+  const planDrafts = useMemo<DraftItem[]>(
+    () =>
+      messages
+        .filter((m) => m.kind === "plan" && m.plan)
+        .map((m, i) => ({
+          key: `draft-${i}`,
+          title: m.title ?? `Draft ${i + 1}`,
+          plan: m.plan as TravelPlannerStateType,
+        })),
+    [messages]
+  );
+
+  // Stub: ready for save logic to be plugged in later
+  const handleSaveSelected = async (selected: DraftItem[]) => {
+    const userId = getSessionId();
+    const data = {
+      user_id: userId,
+      plans: selected.map((item) => item.plan),
+    }
+
+    const res = await fetch('/api/plan', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (res.ok) {
+      const newPlans: SavedPlan[] = await res.json();
+      setSavedPlans((prev) => [...newPlans, ...prev]);
+    }
+
+    setShowSavePicker(false);
+  };
+
+  const handleDeletePlan = async (planId: number) => {
+    const res = await fetch('/api/plan', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan_id: planId, user_id: getSessionId() }),
+    });
+    if (res.ok) {
+      setSavedPlans((prev) => prev.filter((p) => p.plan_id !== planId));
+    }
   };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -194,7 +263,6 @@ export default function Home() {
         preferredActivities: form.preferredActivities,
       },
       mode: "submit",
-      planTitle: "Initial Travel Plan",
       loadingMessage: "Plan Agent: Generating your initial plan...",
       completionMessage: "Plan Agent: Your initial itinerary is ready. Send feedback and I will adjust it.",
       setStatus: setLoading,
@@ -221,7 +289,6 @@ export default function Home() {
         feedback_message: trimmed,
       },
       mode: "feedback",
-      planTitle: "Updated Travel Plan",
       loadingMessage: "Plan Agent: Processing your feedback...",
       completionMessage: (notes) => `Plan Agent: Updated (${notes?.join(", ") || "applied changes"}).`,
       setStatus: setIsAdjustingPlan,
@@ -242,6 +309,41 @@ export default function Home() {
     <div
       className={`${bodyFontClassName} min-h-screen bg-[radial-gradient(circle_at_10%_10%,#ffe8b6_0%,#fff8e8_30%,#f6f9ff_65%,#e5f5f2_100%)] text-slate-900`}
     >
+      {/* Top-right saved plans button */}
+      <button
+        onClick={() => setShowSavedPlans(true)}
+        title="View saved plans"
+        className="fixed right-5 top-5 z-40 flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/90 px-3 py-2 text-sm font-semibold text-slate-700 shadow-md backdrop-blur-sm transition hover:bg-white hover:shadow-lg"
+      >
+        <svg className="h-4 w-4 text-teal-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+        </svg>
+        Saved Plans
+        {savedPlans.length > 0 && (
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-teal-600 text-xs text-white">
+            {savedPlans.length}
+          </span>
+        )}
+      </button>
+
+      <SaveDraftPickerModal
+        isOpen={showSavePicker}
+        drafts={planDrafts}
+        headingFontClassName={headingFontClassName}
+        getBudgetPercent={budgetPercent}
+        onSave={handleSaveSelected}
+        onClose={() => setShowSavePicker(false)}
+      />
+
+      <SavedPlansModal
+        isOpen={showSavedPlans}
+        savedPlans={savedPlans}
+        headingFontClassName={headingFontClassName}
+        getBudgetPercent={budgetPercent}
+        onDelete={handleDeletePlan}
+        onClose={() => setShowSavedPlans(false)}
+      />
+
       <main className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 px-4 py-8 md:px-8 lg:gap-8">
         <TripRequestForm
           headingFontClassName={headingFontClassName}
@@ -282,6 +384,7 @@ export default function Home() {
           onFeedbackChange={setFeedback}
           onSubmitFeedback={onSubmitFeedback}
           onQuickFeedback={(value) => void submitPlanFeedback(value)}
+          onOpenSavePicker={() => setShowSavePicker(true)}
           getBudgetPercent={budgetPercent}
         />
       </main>
