@@ -1,0 +1,11 @@
+CREATE TABLE users (
+  user_id UUID PRIMARY KEY,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE user_plan (
+  plan_id SERIAL PRIMARY KEY,
+  user_id UUID REFERENCES users(user_id),
+  plan_data JSONB,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

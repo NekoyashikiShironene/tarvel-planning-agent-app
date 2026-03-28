@@ -129,6 +129,7 @@ export const TravelPlannerStateSchema = z.object({
 });
 
 const overwrite = <T,>(_current: T, update: T): T => update;
+const appendStringArray = (current: string[], update: string[]): string[] => [...current, ...update];
 
 export const TravelPlannerState = Annotation.Root({
 	user_input: Annotation<z.infer<typeof UserInputSchema> | null | undefined>({
@@ -144,7 +145,7 @@ export const TravelPlannerState = Annotation.Root({
 			includeTags: [],
 			preferredActivities: [],
 			user_action: "submit_form",
-			user_feedback_message: "",
+			user_feedback_message: [],
 		}),
 	}),
 	validator_output: Annotation<z.infer<typeof ValidatorOutputSchema> | null | undefined>({
@@ -189,9 +190,9 @@ export const TravelPlannerState = Annotation.Root({
 		reducer: overwrite,
 		default: () => PresenterOutputSchema.parse({ topic: "", daily_plan_summaries: [], transportation_summary: "", budget_summary: "", adjustment_suggestions: [], reject_message: "" }),
 	}),
-	user_feedback_message: Annotation<string | null | undefined>({
-		reducer: overwrite,
-		default: () => "",
+	user_feedback_message: Annotation<string[]>({
+		reducer: appendStringArray,
+		default: () => [],
 	}),
 	error: Annotation<string | null | undefined>({
 		reducer: overwrite,

@@ -17,7 +17,7 @@ import {
 } from "./lib/travel-planner";
 import { fetchEventSource } from "@microsoft/fetch-event-source"
 import { TravelPlannerStateType } from "./lib/state";
-import { getSessionId } from "./lib/session";
+import { getSessionId, clearSession } from "./lib/session";
 
 const headingFontClassName = "font-sans";
 const bodyFontClassName = "font-sans";
@@ -305,15 +305,40 @@ export default function Home() {
     await submitPlanFeedback(feedback);
   };
 
+  const handleClearSession = () => {
+    clearSession();
+    setPlan(null);
+    setFeedback("");
+    setMessages([
+      {
+        role: "agent",
+        kind: "text",
+        content: "Welcome to Travel Plan Agent. Fill in your trip details, then I will validate and chat with you until the trip is feasible.",
+      },
+    ]);
+  };
+
   return (
     <div
       className={`${bodyFontClassName} min-h-screen bg-[radial-gradient(circle_at_10%_10%,#ffe8b6_0%,#fff8e8_30%,#f6f9ff_65%,#e5f5f2_100%)] text-slate-900`}
     >
-      {/* Top-right saved plans button */}
+      {/* Top-right buttons */}
+      <div className="fixed right-5 top-5 z-40 flex items-center gap-2">
+      <button
+        onClick={handleClearSession}
+        title="Clear session and start over"
+        className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/90 px-3 py-2 text-sm font-semibold text-slate-700 shadow-md backdrop-blur-sm transition hover:bg-rose-50 hover:border-rose-200 hover:text-rose-600 hover:shadow-lg"
+      >
+        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="1 4 1 10 7 10" />
+          <path d="M3.51 15a9 9 0 1 0 .49-4.95" />
+        </svg>
+        Clear Session
+      </button>
       <button
         onClick={() => setShowSavedPlans(true)}
         title="View saved plans"
-        className="fixed right-5 top-5 z-40 flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/90 px-3 py-2 text-sm font-semibold text-slate-700 shadow-md backdrop-blur-sm transition hover:bg-white hover:shadow-lg"
+        className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/90 px-3 py-2 text-sm font-semibold text-slate-700 shadow-md backdrop-blur-sm transition hover:bg-white hover:shadow-lg"
       >
         <svg className="h-4 w-4 text-teal-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
@@ -325,6 +350,7 @@ export default function Home() {
           </span>
         )}
       </button>
+      </div>
 
       <SaveDraftPickerModal
         isOpen={showSavePicker}

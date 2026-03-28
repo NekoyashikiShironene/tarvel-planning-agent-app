@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    container_name: postgres-dev
+    restart: always
+    environment:
+      POSTGRES_USER: devuser
+      POSTGRES_PASSWORD: devpass
+      POSTGRES_DB: travel_planning
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+
+# docker exec -it postgres-dev psql -U devuser -d travel_planning

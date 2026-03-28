@@ -29,7 +29,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
                 includeTags: body.includeTags as string[],
                 preferredActivities: body.preferredActivities as string[]
             },
-            user_feedback_message: "",
+            user_feedback_message: [],
             validator_output: null,
             scheduler_output: null,
             presenter_output: null,
@@ -38,7 +38,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     }
     else {
         state = {
-            user_feedback_message: body.feedback_message as string
+            user_feedback_message: [body.feedback_message as string]
         } as TravelPlannerStateType
     }
 

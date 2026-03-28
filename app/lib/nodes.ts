@@ -15,9 +15,9 @@ import fs from 'fs/promises';
 import path from "path";
 import master from "../../data/master.json";
 
-const validatorModel = new ChatOpenAI({ model: "gpt-5.4-nano-2026-03-17" });
-const schedulerModel = new ChatOpenAI({ model: "gpt-5.4-nano-2026-03-17" });
-const presenterModel = new ChatOpenAI({ model: "gpt-4.1-mini", temperature: 0.7 });
+const validatorModel = new ChatOpenAI({ model: "gpt-5.4-mini" });
+const schedulerModel = new ChatOpenAI({ model: "gpt-5.4-mini" });
+const presenterModel = new ChatOpenAI({ model: "gpt-4.1-mini", temperature: 0.9 });
 
 export const validatorNode: GraphNode<TravelPlannerStateType> = async (state, config) => {
     try {
@@ -34,8 +34,8 @@ export const validatorNode: GraphNode<TravelPlannerStateType> = async (state, co
             { role: "user", content: JSON.stringify(userInput) },
         ];
 
-        if (state.user_feedback_message) {
-            context.push({ role: "user", content: `User Feedback: ${state.user_feedback_message}` });
+        if (state.user_feedback_message?.length) {
+            context.push({ role: "user", content: `User Feedback:\n${state.user_feedback_message.join("\n")}` });
         }
 
         const response = await modelWithStructure.invoke(context);
@@ -94,9 +94,9 @@ export const schedulerNode: GraphNode<TravelPlannerStateType> = async (state, co
             { role: "user", content: JSON.stringify(user_intent) }
         ];
 
-        if (state.user_feedback_message) {
+        if (state.user_feedback_message?.length) {
             context.push({ role: "user", content: `Given Plan: ${JSON.stringify(state.scheduler_output)}` });
-            context.push({ role: "user", content: `User Feedback: ${state.user_feedback_message}` });
+            context.push({ role: "user", content: `User Feedback:\n${state.user_feedback_message.join("\n")}` });
         }
 
         const response = await modelWithStructure.invoke(context);

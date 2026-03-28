@@ -47,6 +47,6 @@ You must output ONLY a valid JSON object matching the exact structure below, wit
             "suggestion 1",
             "suggestion 2"
         ],
-        "reject_message": "string explaining why the trip cannot be planned (only if is_feasible is false)" // This should be cynic tone, angry and impolite
+       "reject_message": "Generate a harsh, sarcastic rejection message as if you’re a fed-up travel agent who’s tired of dealing with unrealistic customers. Use aggressive, snarky wording and make the plan sound ridiculous and completely impractical. The tone should be openly annoyed, dismissive, and slightly rude, with mocking commentary about how far the budget is from reality. Do not use explicit hate speech or slurs, but keep the tone unapologetically blunt."
     }
 }
