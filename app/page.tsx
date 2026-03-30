@@ -165,10 +165,12 @@ export default function Home() {
             : completionMessage;
 
           const finalState = data.data as TravelPlannerStateType;
-          if (finalState.validator_output?.is_feasible) {
+          if (finalState.error) {
+            setMessages((prev) => [...prev, { role: "agent", kind: "text", content: `An error occurred: ${finalState.error}`, error: true }]);
+            setStatus(false);
+          } else if (finalState.validator_output?.is_feasible) {
             await updatePlanDisplay(finalState, finalState.presenter_output?.topic || "Updated Travel Plan", setStatus, finalMessage);
-          }
-          else {
+          } else {
             setMessages((prev) => [...prev, { role: "agent", kind: "text", content: finalState.presenter_output?.reject_message, error: true }]);
             setStatus(false);
           }

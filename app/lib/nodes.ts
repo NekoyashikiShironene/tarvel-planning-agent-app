@@ -21,6 +21,7 @@ const presenterModel = new ChatOpenAI({ model: "gpt-4.1-mini", temperature: 0.9 
 
 export const validatorNode: GraphNode<TravelPlannerStateType> = async (state, config) => {
     try {
+        // throw new Error("Simulated error in validatorNode");
         const modelWithStructure = validatorModel.withStructuredOutput(ValidatorOutputSchema);
         const userInput = state.user_input;
         console.log("Validator received user input:", userInput);
@@ -45,21 +46,33 @@ export const validatorNode: GraphNode<TravelPlannerStateType> = async (state, co
         };
     } catch (error) {
         console.error("Error in validatorNode:", error);
-        return { error: `Tool error: ${error}` };
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        return { error: errorMessage };
     }
 }
 
 export const routeValidationNode = (state: TravelPlannerStateType) => {
     // console.log(state.validator_output);
-    if (state.validator_output?.is_feasible) {
+    if (state.error) 
+        return "Error";
+    if (state.validator_output?.is_feasible) 
         return "Pass";
-    } else {
-        return "Fail";
-    }
+    return "Fail";
+}
+
+export const routeAfterSchedulerNode = (state: TravelPlannerStateType) => {
+    if (state.error) return "Error";
+    return "presenter";
+}
+
+export const routeAfterPresenterNode = (state: TravelPlannerStateType) => {
+    if (state.error) return "Error";
+    return "route_presenter";
 }
 
 export const schedulerNode: GraphNode<TravelPlannerStateType> = async (state, config) => {
     try {
+        // throw new Error("Simulated error in schedulerNode");
         const modelWithStructure = schedulerModel.withStructuredOutput(SchedulerOutputSchema);
         const validatorOutput = state.validator_output as NonNullable<typeof state.validator_output>;
         const user_intent = validatorOutput.intent;
@@ -115,13 +128,15 @@ export const schedulerNode: GraphNode<TravelPlannerStateType> = async (state, co
         };
     } catch (error) {
         console.error("Error in schedulerNode:", error);
-        return { error: `Tool error: ${error}` };
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        return { error: errorMessage };
     }
 }
 
 
 export const presenterNode: GraphNode<TravelPlannerStateType> = async (state, config) => {
     try {
+        // throw new Error("Simulated error in presenterNode");
         const modelWithStructure = presenterModel.withStructuredOutput(PresenterOutputSchema);
         const schedulerOutput = state.scheduler_output;
         const validatorOutput = (state.validator_output as NonNullable<typeof state.validator_output>);
@@ -146,7 +161,8 @@ export const presenterNode: GraphNode<TravelPlannerStateType> = async (state, co
 
     } catch (error) {
         console.error("Error in presenterNode:", error);
-        return { error: `Tool error: ${error}` };
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        return { error: errorMessage };
     }
 }
 

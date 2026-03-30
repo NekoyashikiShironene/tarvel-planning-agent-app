@@ -8,9 +8,9 @@ const workflow = new StateGraph(TravelPlannerState)
     .addNode("presenter", n.presenterNode)
     .addNode("route_presenter", n.routePresentationNode)
     .addEdge(START, "validator")
-    .addConditionalEdges("validator", n.routeValidationNode, { Pass: "scheduler", Fail: "presenter" })
-    .addEdge("scheduler", "presenter")
-    .addEdge("presenter", "route_presenter")
+    .addConditionalEdges("validator", n.routeValidationNode, { Pass: "scheduler", Fail: "presenter", Error: END })
+    .addConditionalEdges("scheduler", n.routeAfterSchedulerNode, { presenter: "presenter", Error: END })
+    .addConditionalEdges("presenter", n.routeAfterPresenterNode, { route_presenter: "route_presenter", Error: END })
     .addEdge("route_presenter", END);
 
 const checkpointer = new MemorySaver();
